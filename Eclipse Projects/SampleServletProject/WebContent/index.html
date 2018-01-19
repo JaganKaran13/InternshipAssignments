@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Servlet Exercise</title>
+<link rel="stylesheet" href="./css/form-style.css">
+</head>
+<body>
+	<div class="form">
+		<h1>Student Details</h1>
+		<form action="HelloServlet" method="POST">
+			<table>
+				<tr>
+					<td class="right-align"><label for="regno">Enter registration Number : </label></td>
+					<td class="left-align"><input type="text" id="regno"
+						name="regno"></td>
+				</tr>
+				<tr>
+					<td class="right-align"><label for="firstname">Enter
+							First Name : </label></td>
+					<td class="left-align"><input type="text" id="firstname"
+						name="firstname"></td>
+				</tr>
+				<tr>
+					<td class="right-align"><label for="lastname">Enter
+							Last Name : </label></td>
+					<td class="left-align"><input type="text" id="lastname"
+						name="lastname"></td>
+				</tr>
+				<tr>
+					<td class="right-align"><label for="deptname">Enter
+							Department Name : </label></td>
+					<td class="left-align"><input type="text" id="deptname"
+						name="deptname"></td>
+				</tr>
+				<tr>
+					<td class="right-align"><label for="year">Enter Year :
+					</label></td>
+					<td class="left-align"><input type="text" id="year"
+						name="year"></td>
+				</tr>
+			</table>
+			<br /> <input type="submit" value="Submit data">
+		</form>
+	</div>
+	<!-- <script>
+		var firstname = document.getElementById("firstname");
+		var lastname = document.getElementById("lastname");
+		var deptname = document.getElementById("deptname");
+		var regno = document.getElementById("regno");
+		var year = document.getElementById("year");
+		if (firstname.trim().length == 0 || lastname.trim().length == 0
+				|| deptname.trim().length == 0 || regno.trim().length == 0
+				|| year.trim().length == 0) {
+			alert("Enter all the fields.");
+		}
+	</script> -->
+</body>
+</html>

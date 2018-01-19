@@ -1,0 +1,136 @@
+body {
+	background-color: #D0D0D0;
+}
+
+.navbar {
+    overflow: hidden;
+    background-color: #DADAE0;
+    font-family: "Times New Roman", Times, serif;
+    border: 1px solid #54587F;
+    margin: 20px;
+}
+
+.newsItem {
+	display: flex;
+	flex-wrap: wrap;
+	font-family: Times New Roman;
+}
+
+.navbar a {
+    float: left;
+    font-size: 16px;
+    color: #54587F;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+	font-weight: bold;
+}
+
+.col-sm-12 {
+	height: 350px;
+	width: 90%;
+	float: left;
+	margin: 10px;
+	padding: 10px;
+	flex-direction: row;
+}
+
+.newsItem:nth-child(4n+1) {
+	background-color: #94DAD5;
+}
+
+.newsItem:nth-child(4n+2) {
+	background-color: #F1D9D5;
+}
+
+.newsItem:nth-child(4n+3) {
+	background-color: #FCC8B7;
+}
+
+.newsItem:nth-child(4n+4) {
+	background-color: #DADAE0;
+}
+
+.newsItem table tr td a {
+	text-decoration: none;
+	font-size: 20px;
+}
+
+.newsItem:nth-child(4n+1) table tr td a {
+	color: #5178E8;
+}
+
+.newsItem:nth-child(4n+2) table tr td a {
+	color: #AB2BCE;
+}
+
+.newsItem:nth-child(4n+3) table tr td a {
+	color: #FF5050;
+}
+
+.newsItem:nth-child(4n+4) table tr td a {
+	color: #57575A;
+}
+
+.newsItem table tr td a:hover {
+	font-weight: bold;
+}
+
+.newsItem:nth-child(4n+1) table tr td h2 {
+	color: white;
+}
+
+.newsItem:nth-child(4n+2) table tr td h2 {
+	color: white;
+}
+
+.newsItem:nth-child(4n+3) table tr td h2 {
+	color: white;
+}
+
+img {
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+}
+
+@media screen and (min-width: 1033px) {
+	.newsItem:nth-child(4n+1) {
+		min-height: 350px;
+		width: 46%;	
+	}
+	
+	.newsItem:nth-child(4n+2) {
+		width: 46%;
+	}
+	
+	.newsItem:nth-child(4n+3) {
+		width: 46%;
+	}
+	
+	.newsItem:nth-child(4n+4) {
+		width: 46%;
+	}
+}
+
+@media screen and (min-width: 1200px) {
+	.newsItem:nth-child(4n+1) {
+		min-height: 740px;
+		width: 30%;	
+	}
+	
+	.newsItem:nth-child(4n+2) {
+		width: 63%;
+	}
+	
+	.newsItem:nth-child(4n+3) {
+		width: 30%;
+	}
+	
+	.newsItem:nth-child(4n+4) {
+		width: 30%;
+	}
+}

@@ -1,0 +1,40 @@
+@charset "ISO-8859-1";
+body {
+	background-color: #D0D0D0;
+}
+
+.navbar {
+    overflow: hidden;
+    background-color: #DADAE0;
+    font-family: Arial;
+    border: 1px solid #54587F;
+    margin: 20px;
+}
+
+.navbar a {
+    float: left;
+    font-size: 16px;
+    color: #54587F;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+	font-weight: bold;
+}
+
+.image {
+	text-align: center;
+}
+
+img {
+	width: 400px;
+	height: 400px;
+}
+
+h1,
+h2 {
+	text-align: center;
+	color: #54587F;
+}

@@ -1,0 +1,49 @@
+.left-align {
+	text-align: left;
+}
+
+.right-align {
+	text-align: right;
+}
+
+body {
+	text-align: center;
+	color: white;
+}
+
+table {
+	margin: auto;
+}
+
+input[type=text] {
+    box-sizing: border-box;
+    margin: 8px 8px;
+    padding: 4px 4px;
+    border: none;
+    border-bottom: 2px dashed #83A4C5;
+    background: #495C70;
+    color: white;
+}
+
+input:focus {
+    border-bottom: 2px dashed yellowgreen;
+    outline: none;
+}
+
+.form {
+	background: #495C70;
+    padding: 30px 30px 15px 30px;
+    color: white;
+}
+
+input[type=submit] {
+    background: #576E86;
+    border: none;
+    padding: 8px 10px 8px 10px;
+    border-radius: 5px;
+    color: #A8BACE;
+}
+
+input[type=submit]:hover {
+	background: #394D61;
+}
