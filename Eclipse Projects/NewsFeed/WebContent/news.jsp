@@ -8,7 +8,8 @@
 <link rel="stylesheet" href="./css/display-news.css">
 </head>
 <body>
-	<%@ page import="org.json.*, org.jsoup.*, org.jsoup.nodes.*, org.jsoup.select.Elements"%>
+	<%@ page
+		import="org.json.*, org.jsoup.*, org.jsoup.nodes.*, org.jsoup.select.Elements, java.util.*, com.ztech.bean.NewsItemBean"%>
 	<div class="navbar">
 		<a href="index.jsp">HOME</a> <a
 			href="http://localhost:8080/NewsFeed/NewsServlet?newsCategory=WORLD">WORLD</a>
@@ -23,22 +24,23 @@
 	</div>
 	<div class="container">
 		<%
-			JSONArray jsonArray = (JSONArray) request.getAttribute("jsonArray");
-			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject object = (JSONObject) jsonArray.get(i);
-				String description = jsonArray.getJSONObject(i).getString("description");
-		    	Document table = Jsoup.parse(description);
-		    	Elements img = table.getElementsByTag("img");
+			ArrayList<NewsItemBean> newsArrayList = (ArrayList<NewsItemBean>) request.getAttribute("newsArrayList");
+			for (int i = 0; i < newsArrayList.size(); i++) {
+				NewsItemBean newsItemBean = (NewsItemBean) newsArrayList.get(i);
 		%>
 		<div class="newsItem col-sm-12">
 			<table>
-				<tr> 
-					<td><h2><%=object.get("title")%></h2></td>
+				<tr>
+					<td><h2><%=newsItemBean.getTitle() %></h2></td>
 				</tr>
 				<tr>
-					<td class = "image"><%=img.get(0)%></td>
+					<td class="image"><%=newsItemBean.getImage() %></td>
 				</tr>
-				<tr><td><a class="more-about" href="<%=object.get("link")%>">More about this story</a></td></tr>
+				<tr>
+					<td><a class="more-about"
+						href="<%=newsItemBean.getLink() %> target="_blank"">More about this
+							story</a></td>
+				</tr>
 			</table>
 		</div>
 		<%
