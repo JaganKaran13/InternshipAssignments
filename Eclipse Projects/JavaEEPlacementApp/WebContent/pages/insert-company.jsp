@@ -32,31 +32,29 @@
 			<tr>
 				<td class="right-align"><label for="companyid">Enter
 						the company ID : </label></td>
-				<td><input type="text" name="companyid" id="companyid" required></td>
+				<td><input type="text" name="companyid" id="companyid"></td>
 			</tr>
 			<tr>
 				<td class="right-align"><label for="company-name">Enter
 						the company name : </label></td>
-				<td><input type="text" name="companyName" id="company-name"
-					required></td>
+				<td><input type="text" name="companyName" id="company-name"></td>
 			</tr>
 			<tr>
 				<td class="right-align"><label for="arrear-criteria">Enter
 						the arrear criteria : </label></td>
 				<td><input type="text" name="arrearCriteria"
-					id="arrear-criteria" required></td>
+					id="arrear-criteria"></td>
 			</tr>
 			<tr>
 				<td class="right-align"><label for="cgpa-criteria">Enter
 						the CGPA criteria : </label></td>
-				<td><input type="text" name="cgpaCriteria" id="cgpa-criteria"
-					required></td>
+				<td><input type="text" name="cgpaCriteria" id="cgpa-criteria"></td>
 			</tr>
 			<tr>
 				<td class="right-align"><label for="company-password">Enter
 						the Company Password : </label></td>
 				<td><input type="password" name="companyPassword"
-					id="company-password" required></td>
+					id="company-password"></td>
 			</tr>
 		</table>
 		<p class="error-message"><%=responseMessage%></p>

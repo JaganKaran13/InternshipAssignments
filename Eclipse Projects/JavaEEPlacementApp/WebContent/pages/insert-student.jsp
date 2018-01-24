@@ -33,27 +33,27 @@
 	<table>
 		<tr>
 			<td class="right-align"><label for="companyid">Enter the Register number : </label></td>
-			<td><input type="text" name="regno" id="companyid" required></td>
+			<td><input type="text" name="regno" id="companyid"></td>
 		</tr>
 		<tr>
 			<td class="right-align"><label for="company-name">Enter the student name : </label></td>
-			<td><input type="text" name="studentName" id="company-name" required></td>
+			<td><input type="text" name="studentName" id="company-name"></td>
 		</tr>
 		<tr>
 			<td class="right-align"><label for="email">Enter the email : </label></td>
-			<td><input type="email" name="email" id="email" required></td>
+			<td><input type="text" name="email" id="email"></td>
 		</tr>
 		<tr>
 			<td class="right-align"><label for="deptName">Enter the department name : </label></td>
-			<td><input type="text" name="deptName" id="deptName" required></td>
+			<td><input type="text" name="deptName" id="deptName"></td>
 		</tr>
 		<tr>
 			<td class="right-align"><label for="arrear-criteria">Enter the number of arrears : </label></td>
-			<td><input type="text" name="arrears" id="arrear-criteria" required></td>
+			<td><input type="text" name="arrears" id="arrear-criteria"></td>
 		</tr>
 		<tr>
 			<td class="right-align"	><label for="cgpa-criteria">Enter the CGPA : </label></td>
-			<td><input type="text" name="cgpa" id="cgpa-criteria" required></td>
+			<td><input type="text" name="cgpa" id="cgpa-criteria"></td>
 		</tr>
 	</table>
 		<p class="error-message"><%=responseMessage %></p>

@@ -7,6 +7,7 @@ import com.ztech.dao.AdminDAOImpl;
 public class AdminDelegator {
 	
 	AdminValidator adminValidator = new AdminValidator();
+	AdminDAO adminDAO;
 
 	public String insertCompanyDetails(int companyid, String companyName, int arrearCriteria,
 			float cgpaCriteria, String companyPassword) {
@@ -19,14 +20,15 @@ public class AdminDelegator {
 		if(!adminValidator.validateCompanyDetails(companyDetails).equals("")) {
 			return adminValidator.validateCompanyDetails(companyDetails);
 		}
-		AdminDAO adminDAO = new AdminDAOImpl();
+		adminDAO = new AdminDAOImpl();
 		if(adminDAO.insertCompanyDetails(companyDetails)) {
 			return "";
+		}else {
+			return "The company details are already present";
 		}
-		return "The company details are already present";
 	}
 
-	public boolean insertStudentDetails(int regno, String studentName, String email, int arrears, float cgpa,
+	public String insertStudentDetails(int regno, String studentName, String email, int arrears, float cgpa,
 			String deptName) {
 		StudentDetails studentDetails = new StudentDetails();
 		studentDetails.setRegno(regno);
@@ -36,12 +38,15 @@ public class AdminDelegator {
 		studentDetails.setCgpa(cgpa);
 		studentDetails.setDeptName(deptName);
 		studentDetails.setPlacedStatus("no");
-		AdminDAO adminDAO = new AdminDAOImpl();
-		adminValidator.validateStudentDetails(studentDetails);
-		if(adminDAO.insertStudentDetails(studentDetails)) {
-			return true;
+		adminDAO = new AdminDAOImpl();
+		if(!adminValidator.validateStudentDetails(studentDetails).equals("")) {
+			return adminValidator.validateStudentDetails(studentDetails);
 		}
-		return false;	
+		if(adminDAO.insertStudentDetails(studentDetails)) {
+			return "";
+		} else {
+			return "The student details is already present.";
+		}	
 	}
 
 }

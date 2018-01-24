@@ -1,7 +1,6 @@
 package com.ztech.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.logging.Logger;
 
 import javax.servlet.RequestDispatcher;
@@ -11,11 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ztech.beans.CompanyDetails;
-import com.ztech.dao.AdminDAO;
-import com.ztech.dao.AdminDAOImpl;
 import com.ztech.delegates.AdminDelegator;
-import com.ztech.delegates.AdminValidator;
 
 @WebServlet("/InsertCompanyServlet")
 public class InsertCompanyServlet extends HttpServlet {

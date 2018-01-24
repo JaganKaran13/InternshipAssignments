@@ -1,7 +1,6 @@
 package com.ztech.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.logging.Logger;
 
 import javax.servlet.RequestDispatcher;
@@ -11,9 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ztech.beans.StudentDetails;
-import com.ztech.dao.AdminDAO;
-import com.ztech.dao.AdminDAOImpl;
 import com.ztech.delegates.AdminDelegator;
 
 @WebServlet("/InsertStudentServlet")
@@ -36,9 +32,10 @@ public class InsertStudentServlet extends HttpServlet {
 			float cgpa = Float.parseFloat(request.getParameter("cgpa"));
 			String deptName = request.getParameter("deptName");
 			AdminDelegator adminDelegator = new AdminDelegator();
-			if (!adminDelegator.insertStudentDetails(regno, studentName, email, arrears,
-					cgpa, deptName)) {
-				request.setAttribute("responseMessage", "The student details are already present");
+			String responseMessage =adminDelegator.insertStudentDetails(regno, studentName, email, arrears,
+					cgpa, deptName); 
+			if (!responseMessage.equals("")) {
+				request.setAttribute("responseMessage", responseMessage);
 				rd = request.getRequestDispatcher("./pages/insert-student.jsp");
 				rd.forward(request, response);
 			} else {
