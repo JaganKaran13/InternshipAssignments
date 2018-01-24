@@ -1,0 +1,24 @@
+@charset "ISO-8859-1";
+section {
+	text-align: center;
+	color: white;
+	background: url('../images/student-portal-background.jpg');
+	width: 80%;
+	height: 100vh;
+	left: 1vh;
+	margin: 2% auto;
+}
+
+body {
+	font-size: 18px;
+}
+
+table {
+	margin: 5% auto 3% auto;
+}
+
+td, th {
+	padding: 15px;
+	text-align: left;
+	border-bottom: 2px solid #ddd;
+}

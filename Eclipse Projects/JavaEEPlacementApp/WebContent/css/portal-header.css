@@ -1,0 +1,37 @@
+@charset "ISO-8859-1";
+.college-logo {
+	width: 170px;
+	height: 80px;
+	float: left;
+}
+
+h1 {
+	text-align: center;
+	color: blue;
+	font-size: 40px;
+}
+
+.header,
+hr {
+	width: 80%;
+	text-align: center;
+	margin: auto;
+}
+
+hr {
+	background: blue;
+	height: 2px;
+}
+
+a img {
+	width: 20px;
+	padding: 3px;
+	float: right;
+	height: 20px;
+}
+
+.icon-links {
+	margin-right: 10%;
+	position: relative;
+	bottom: 30px;
+}

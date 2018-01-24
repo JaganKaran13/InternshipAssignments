@@ -1,0 +1,29 @@
+@charset "ISO-8859-1";
+
+.navbar {
+	overflow: hidden;
+	background-color: #DADAE0;
+	font-family: "Times New Roman", Times, serif;
+	border: 1px solid #54587F;
+	margin: 20px;
+}
+
+.navbar a {
+	position: relative;
+	float: left;
+	font-size: 20px;
+	color: #54587F;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+
+.navbar a:hover {
+	font-weight: bold;
+}
+
+body {
+	background: url('../images/admin-background.jpg') no-repeat center;
+	background-size: cover;
+	color: white;
+}

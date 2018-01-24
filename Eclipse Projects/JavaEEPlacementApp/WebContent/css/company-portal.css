@@ -1,0 +1,49 @@
+@charset "ISO-8859-1";
+body {
+	font-size: 18px;
+}
+
+a {
+	color: white;
+	text-decoration: none;
+}
+
+section a:hover {
+	font-weight: bold;
+}
+
+section {
+	text-align: center;
+	color: white;
+	background: url('../images/student-portal-background.jpg');
+	width: 80%;
+	height: 100vh;
+	left: 1vh;
+	margin: 2% auto;
+	position: relative;
+}
+
+input {
+	font-size: 18px;
+}
+
+form {
+	text-align: center;
+	padding-top: 10px;
+}
+
+table {
+	margin: 5% auto 3% auto;
+}
+
+td, th {
+	padding: 5px;
+}
+
+.right-align {
+	text-align: right;
+}
+
+h2 {
+	font-size: 25px;
+} 

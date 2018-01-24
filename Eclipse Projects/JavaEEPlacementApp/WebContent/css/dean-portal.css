@@ -1,0 +1,24 @@
+@charset "ISO-8859-1";
+section {
+	background: url('../images/admin-background.jpg');
+	width: 80%;
+	height: 100vh;
+	margin: 0 auto;
+	color: white;
+}
+
+table {
+	border-collapse: collapse;
+	margin: 5% auto;
+}
+
+th, td {
+	text-align: left;
+   	border-bottom: 2px solid #ddd;
+   	padding: 15px;
+}
+
+th {
+	font-size: 20px;
+}
+
