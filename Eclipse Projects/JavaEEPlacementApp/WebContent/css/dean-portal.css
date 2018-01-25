@@ -2,7 +2,7 @@
 section {
 	background: url('../images/admin-background.jpg');
 	width: 80%;
-	height: 100vh;
+	height: 100%;
 	margin: 0 auto;
 	color: white;
 }
@@ -22,3 +22,9 @@ th {
 	font-size: 20px;
 }
 
+#myChart {
+	padding: 50px;
+	margin: 0 auto;
+	position: relative;
+	bottom: 30px;
+}

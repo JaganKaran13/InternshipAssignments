@@ -8,13 +8,13 @@
 <link rel="stylesheet" href="./css/home-page.css">
 </head>
 <body>
-	<div class="college">
+	<div class="college col-sm-12">
 	<a href="./pages/college-login.jsp">College Portal</a>
 	</div>
-	<div class="company">
+	<div class="company col-sm-12">
 	<a href="./pages/company-login.jsp">Company Portal</a>
 	</div>
-	<div class="student">
+	<div class="student col-sm-12">
 	<a href="./pages/student.jsp">Student Portal</a>
 	</div>
 </body>

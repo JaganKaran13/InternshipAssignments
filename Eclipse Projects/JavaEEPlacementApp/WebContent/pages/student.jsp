@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="req" value="${pageContext.request}" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -13,6 +14,13 @@
 <link rel="stylesheet" href="css/portal-header.css">
 </head>
 <body>
+	<fmt:bundle basename="com.ztech.bundles.config" >
+		<fmt:message key="STUDENT_HEADER" var="studentHeader" />
+		<fmt:message key="COMPANY_NAME" var="companyName" />
+		<fmt:message key="REGNO" var="regno"/>
+		<fmt:message key="HOME_PAGE" var="homePage"/>
+		<fmt:message key="CHECK_ELIGIBILITY" var="checkEligibility"/>
+	</fmt:bundle>
 	<%
 		String errorMessage;
 		if(request.getAttribute("errorMessage") == null) {
@@ -25,7 +33,7 @@
 		import="java.util.ArrayList, com.ztech.beans.CompanyDetails, com.ztech.dao.*"%>
 	<header class="header"> <img src="images/college-logo.jpg"
 		class="college-logo">
-	<h1>Student Placement Portal</h1>
+	<h1>${studentHeader}</h1>
 	</header>
 	<div class="icon-links">
 		<a href="https://www.facebook.com/SSNInstitution" target="_blank"><img
@@ -44,7 +52,7 @@
 	<form action="StudentServlet" method="GET">
 		<table>
 			<tr>
-				<td class="right-align"><label>Enter the company ID : </label></td>
+				<td class="right-align"><label>${companyName} : </label></td>
 				<td><select name="companyid">
 						<%
 							OthersDAO othersDAO = new OthersDAOImpl();
@@ -59,15 +67,14 @@
 				</select></td>
 			</tr>
 			<tr>
-				<td class="right-align"><label for="regno">Enter the
-						Registration number : </label></td>
+				<td class="right-align"><label for="regno">${regno} : </label></td>
 				<td><input type="text" name="regno" id="regno" required></td>
 			</tr>
 		</table>
-		<input type="submit" value="Check Eligibility">
+		<input type="submit" value="${checkEligibility}">
 	</form>
 	<br />
-	<a href="index.jsp">Go to Home Page</a>
+	<a href="index.jsp">${homePage}</a>
 	<p class="errorMessage"><%=errorMessage %></p>
 	</section>
 </body>

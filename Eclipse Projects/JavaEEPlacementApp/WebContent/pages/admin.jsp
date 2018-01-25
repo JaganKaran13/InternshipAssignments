@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
 <c:set var="req" value="${pageContext.request}" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -12,6 +13,9 @@
 <link rel="stylesheet" href="css/admin-navbar.css">
 </head>
 <body>
+	<fmt:bundle basename="com.ztech.bundles.config" >
+		<fmt:message key="HELLO_ADMIN" var="helloAdmin" />
+	</fmt:bundle>
 	<%
 		if(session == null) {
 			response.sendRedirect("pages/college-login.jsp");
@@ -24,6 +28,6 @@
 			href="pages/view-company.jsp">View Company</a> 
 		<a href="LogOutServlet" name="logout">Log Out</a>
 	</div>
-	<h1>Hello Admin.</h1>
+	<h1>${helloAdmin}</h1>
 </body>
 </html>

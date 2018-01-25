@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
 <c:set var="req" value="${pageContext.request}" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -12,9 +13,14 @@
 <link rel="stylesheet" href="css/company-portal.css">
 </head>
 <body>
+	<fmt:bundle basename="com.ztech.bundles.config" >
+		<fmt:message key="COMPANY_HEADER" var="companyHeader" />
+		<fmt:message key="STUDENT_REGNO" var="studentRegno" />
+		<fmt:message key="ENTER_STUDENT" var="enterStudent"/>
+	</fmt:bundle>
 	<header class="header"> <img src="images/college-logo.jpg"
 		class="college-logo">
-	<h1>Company Placement Portal</h1>
+	<h1>${companyHeader }</h1>
 	</header>
 	<div class="icon-links">
 		<a href="https://www.facebook.com/SSNInstitution" target="_blank">
@@ -44,14 +50,13 @@
 	<form action="CompanyServlet" method="GET">
 		<table>
 			<tr>
-				<td class="right-align"><label for="regno">Enter the
-						student register number : </label></td>
+				<td class="right-align"><label for="regno">${studentRegno } : </label></td>
 				<input type="hidden" name="companyid" value="<%=companyid %>">
 				<td><input name="regno" type="text" id="regno" required></td>
 			</tr>
 		</table>
 		<p class="response-message"><%=responseMessage %></p>
-		<input type="submit" value="Enter student">
+		<input type="submit" value="${enterStudent }">
 	</form>
 	<br />
 	<a href="index.jsp">Go to Home Page</a> </section>
