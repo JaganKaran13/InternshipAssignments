@@ -2,14 +2,13 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:set var="req" value="${pageContext.request}" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<base href="${req.contextPath}/" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert Company Details</title>
+<c:set var="req" value="<%=request.getContextPath() %>" />
+<base href="${req}/" />
 <link rel="stylesheet" type="text/css" href="css/admin-navbar.css">
 <link rel="stylesheet" type="text/css" href="css/insert-details.css">
 </head>

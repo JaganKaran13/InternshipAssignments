@@ -1,16 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
-<c:set var="req" value="${pageContext.request}" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<base href="${req.contextPath}/" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Company login</title>
-<link rel="stylesheet" type="text/css" href="css/login.css">
+<c:set var="req" value="<%=request.getContextPath() %>" />
+<link rel="stylesheet" type="text/css" href="${req}/css/login.css">
 </head>
 <body>
 	<fmt:bundle basename="com.ztech.bundles.config" >
@@ -29,8 +27,8 @@
 	%>
 	<h1>${companyLoginHeader}</h1>
 	<div class="login">
-		<img class="logo-side-icon" src="images/login-logo.jpg">
-		<form action="CompanyLoginServlet" method="POST">
+		<img class="logo-side-icon" src="${req}/images/login-logo.jpg">
+		<form action="${req}/CompanyLoginServlet" method="POST">
 			<label>${companyID } : </label><br /> <br /> 
 			<input name="companyid" type="text"><br /> <br /> 
 			<label>${companyPassword } : </label><br /> <br />
