@@ -2,7 +2,7 @@
 section {
 	background: url('../images/admin-background.jpg');
 	width: 80%;
-	height: 100%;
+	height: auto;
 	margin: 0 auto;
 	color: white;
 }
@@ -22,9 +22,51 @@ th {
 	font-size: 20px;
 }
 
-#myChart {
+h2 {
+	text-align: center;
+}
+
+.chart-section {
 	padding: 50px;
-	margin: 0 auto;
-	position: relative;
-	bottom: 30px;
+}
+
+#placementChart {
+	width: 50%;
+	height: 500px;
+	margin: auto;
+}
+
+@media only screen and (max-width: 800px) {
+	section {
+		width: 100%;
+	}
+	th, td {
+		font-size: 16px;
+	}
+	
+	th, td {
+		padding: 5px;
+	}
+
+	#placementChart {
+		width: 100%;
+	}
+}
+
+@media only screen and (max-width: 400px) {
+	th, td {
+		font-size: 12px;
+	}
+	
+	th, td {
+		padding: 5px;
+	}
+
+	#placementChart {
+		height: 400px;
+	}
+
+	.chart-section {
+		padding: 50px 10px;
+	}
 }

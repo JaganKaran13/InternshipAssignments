@@ -2,6 +2,9 @@
 .college-logo {
 	width: 170px;
 	height: 80px;
+}
+
+.college-image-section {
 	float: left;
 }
 
@@ -15,10 +18,11 @@ h1 {
 hr {
 	width: 80%;
 	text-align: center;
-	margin: auto;
+	margin: 0 auto;
 }
 
 hr {
+	margin-top: 60px;
 	background: blue;
 	height: 2px;
 }
@@ -34,4 +38,32 @@ a img {
 	margin-right: 10%;
 	position: relative;
 	bottom: 30px;
+}
+
+@media only screen and (max-width: 800px) {
+	.header,
+	hr{
+		width: 100%;
+	}
+
+	.college-logo {
+		width: 120px;
+		height: 50px;
+	}
+}
+
+@media only screen and (max-width: 500px) {
+	.college-image-section {
+		float: none;
+		text-align: center;	
+	}
+
+	.college-logo {
+		width: 200px;
+		height: 80px;
+	}
+	
+	hr {
+		margin-top: -3px;
+	}
 }

@@ -1,25 +1,31 @@
 package com.ztech.dbutils;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 public class DBUtils {
 
 	private static final Logger logger = Logger.getLogger(DBUtils.class.getName());
-	private static final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/placement";
-	private static final String USERNAME = "root";
-	private static final String PASSWORD = "zilkeradmin";
 	public static Connection conn;
-
+	
 	public static Connection getConnection() {
 		try {
-			conn = DriverManager.getConnection(CONNECTION_STRING, USERNAME, PASSWORD);
+			Context initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup("java:comp/env");
+            DataSource ds = (DataSource) envContext.lookup("jdbc/placement");
+            conn = ds.getConnection();
 		} catch (SQLException e) {
 			logger.warning("Error connecting with SQL Driver");
+		} catch (NamingException e) {
+			e.printStackTrace();
 		}
 		return conn;
 	}

@@ -18,7 +18,7 @@ section {
 	color: white;
 	background: url('../images/student-portal-background.jpg');
 	width: 80%;
-	height: 100vh;
+	height: 70vh;
 	left: 1vh;
 	margin: 2% auto;
 }
@@ -61,4 +61,20 @@ input[type=submit]:hover {
 	background: white;
 	color: blue;
 	box-shadow:  0 12px 16px 0 rgba(0,0,0,0.5);
+}
+
+@media only screen and (max-width: 800px) {
+	section {
+		width: 100%;
+	}
+
+	select option {
+		font-size: 12px;
+	}
+}
+
+@media only screen and (max-width: 400px) {
+	select, input[type=text] {
+		width: 100px;
+	}
 }
