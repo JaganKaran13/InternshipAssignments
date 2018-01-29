@@ -1,5 +1,8 @@
 package com.ztech.delegates;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import com.ztech.beans.*;
 import com.ztech.dao.AdminDAO;
 import com.ztech.dao.AdminDAOImpl;
@@ -47,6 +50,17 @@ public class AdminDelegator {
 		} else {
 			return "The student details is already present.";
 		}	
+	}
+	
+	public ArrayList<StudentDetails> displayStudentDetails(String orderBy) {
+		ArrayList<StudentDetails> studentArrayList = new ArrayList<StudentDetails>();
+		AdminDAO adminDAO = new AdminDAOImpl();
+		try {
+			studentArrayList = adminDAO.displayStudentDetails(orderBy);
+		} catch (SQLException e) {
+			
+		}
+		return studentArrayList;
 	}
 
 }

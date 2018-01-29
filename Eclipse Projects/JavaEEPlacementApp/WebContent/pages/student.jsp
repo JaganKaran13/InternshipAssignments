@@ -13,6 +13,8 @@
 <link rel="stylesheet" href="css/portal-header.css">
 </head>
 <body>
+	<%@ page
+		import="java.util.ArrayList, com.ztech.beans.CompanyDetails, com.ztech.delegates.StudentDelegator"%>
 	<fmt:bundle basename="com.ztech.bundles.config" >
 		<fmt:message key="STUDENT_HEADER" var="studentHeader" />
 		<fmt:message key="COMPANY_NAME" var="companyName" />
@@ -21,15 +23,13 @@
 		<fmt:message key="CHECK_ELIGIBILITY" var="checkEligibility"/>
 	</fmt:bundle>
 	<%
-		String errorMessage;
-		if(request.getAttribute("errorMessage") == null) {
-			errorMessage = "";
+		String responseMessage;
+		if(request.getAttribute("responseMessage") == null) {
+			responseMessage = "";
 		} else {
-			errorMessage = (String) request.getAttribute("errorMessage");
+			responseMessage = (String) request.getAttribute("responseMessage");
 		}
 	%>
-	<%@ page
-		import="java.util.ArrayList, com.ztech.beans.CompanyDetails, com.ztech.dao.*"%>
 	<header class="header"> <img src="images/college-logo.jpg"
 		class="college-logo">
 	<h1>${studentHeader}</h1>
@@ -48,18 +48,19 @@
 	<br />
 	<hr />
 	<section>
-	<form action="StudentServlet" method="GET">
+	<form action="StudentServlet" method="POST">
 		<table>
 			<tr>
 				<td class="right-align"><label>${companyName} : </label></td>
 				<td><select name="companyid">
 						<%
-							OthersDAO othersDAO = new OthersDAOImpl();
-							ArrayList<CompanyDetails> companyArrayList = othersDAO.getCompanyList();
+							StudentDelegator studentDelegator = new StudentDelegator();
+							ArrayList<CompanyDetails> companyArrayList = studentDelegator.getCompanyList();
 							for (int i = 0; i < companyArrayList.size(); i++) {
-								CompanyDetails companyDetails = companyArrayList.get(i);
 						%>
-						<option value="<%=companyDetails.getCompanyid()%>"><%=companyDetails.getName()%></option>
+						<option value="<%=companyArrayList.get(i).getCompanyid()%>">
+							<%=companyArrayList.get(i).getName()%>
+						</option>
 						<%
 							}
 						%>
@@ -67,14 +68,15 @@
 			</tr>
 			<tr>
 				<td class="right-align"><label for="regno">${regno} : </label></td>
-				<td><input type="text" name="regno" id="regno" required></td>
+				<td><input type="text" name="regno" id="regno"></td>
 			</tr>
 		</table>
-		<input type="submit" value="${checkEligibility}">
+		<input type="submit" name="applicationSubmit" value="Apply">
+		<input type="submit" name="applicationSubmit" value="Decline">
 	</form>
 	<br />
 	<a href="index.jsp">${homePage}</a>
-	<p class="errorMessage"><%=errorMessage %></p>
+	<p class="responseMessage"><%=responseMessage %></p>
 	</section>
 </body>
 </html>

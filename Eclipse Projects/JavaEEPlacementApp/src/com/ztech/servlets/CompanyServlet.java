@@ -25,29 +25,12 @@ public class CompanyServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String responseMessage = "";
-		response.setContentType("text/html");
-		RequestDispatcher rd;
-		int companyid = 0;
 		CompanyDelegator companyDelegator = new CompanyDelegator();
-		try {
-			companyid = Integer.parseInt(request.getParameter("companyid"));
-			int regno = Integer.parseInt(request.getParameter("regno"));
-			OthersDAO othersDAO = new OthersDAOImpl();
-			responseMessage = othersDAO.enterStudentsPlaced(companyid, regno);
-			request.setAttribute("companyid", request.getParameter("companyid"));
-			request.setAttribute("responseMessage", responseMessage);
-			request.setAttribute("companyName", companyDelegator.getCompanyName(companyid));
-		} catch(NumberFormatException e) {
-			request.setAttribute("companyid", request.getParameter("companyid"));
-			request.setAttribute("responseMessage", "Enter the register number properly.");
-			request.setAttribute("companyName", companyDelegator.getCompanyName(companyid));
-			rd = request.getRequestDispatcher("./pages/company.jsp");
-			rd.forward(request, response);
-		} catch (SQLException e) {
-			logger.warning("Error connecting it with MySQL.");
-		}
-		rd = request.getRequestDispatcher("./pages/company.jsp");
+		companyDelegator.insertStudentsPlaced(request, response);
+		int companyid = Integer.parseInt(request.getParameter("companyid"));
+		request.setAttribute("companyid", request.getParameter("companyid"));
+		request.setAttribute("companyName", companyDelegator.getCompanyName(companyid));
+		RequestDispatcher rd = request.getRequestDispatcher("./pages/company.jsp");
 		rd.forward(request, response);
 	}
 

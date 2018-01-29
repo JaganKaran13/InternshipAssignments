@@ -8,57 +8,74 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Company Placement Portal</title>
 <c:set var="req" value="<%=request.getContextPath() %>" />
-<link rel="stylesheet" href="${req}/css/portal-header.css">
-<link rel="stylesheet" href="${req}/css/company-portal.css">
+<base href="${req}/">
+<link rel="stylesheet" href="css/portal-header.css">
+<link rel="stylesheet" href="css/company-portal.css">
 </head>
 <body>
+	<%@page import="com.ztech.delegates.*, com.ztech.beans.StudentDetails, java.util.*" %>
+	<% 
+		String companyName = (String) request.getAttribute("companyName");
+		String companyid = (String) request.getAttribute("companyid");
+	%>
 	<fmt:bundle basename="com.ztech.bundles.config" >
 		<fmt:message key="COMPANY_HEADER" var="companyHeader" />
 		<fmt:message key="STUDENT_REGNO" var="studentRegno" />
 		<fmt:message key="ENTER_STUDENT" var="enterStudent"/>
 	</fmt:bundle>
-	<header class="header"> <img src="${req}/images/college-logo.jpg"
+	<header class="header"> <img src="images/college-logo.jpg"
 		class="college-logo">
 	<h1>${companyHeader}</h1>
 	</header>
 	<div class="icon-links">
 		<a href="https://www.facebook.com/SSNInstitution" target="_blank">
-		<img src="${req}/images/fb-icon.jpg"></a> 
+		<img src="images/fb-icon.jpg"></a> 
 		<a href="https://www.youtube.com/user/SSNinstitutions" target="_blank">
-		<img src="${req}/images/youtube-icon.png"></a>
+		<img src="images/youtube-icon.png"></a>
 		<a href="https://twitter.com/ssninstitutions" target="_blank">
-		<img src="${req}/images/twitter-icon.jpg"></a>
+		<img src="images/twitter-icon.jpg"></a>
 		<a href="https://www.linkedin.com/company/ssn-institutions-chennai-india?trk=top_nav_home" target="_blank">
-		<img src="${req}/images/linkedin-icon.jpg"></a>
+		<img src="images/linkedin-icon.jpg"></a>
 	</div>
 	<br />
 	<br />
 	<hr />
 	<section>
-	<% 
-		String companyName = (String) request.getAttribute("companyName");
-		String responseMessage = "";
-		String companyid = (String) request.getAttribute("companyid");
-		if(request.getAttribute("responseMessage") == null) {
-			responseMessage = "";
-		} else {
-			responseMessage = (String) request.getAttribute("responseMessage");
-		}
-	%>
 	<h2>Welcome <%=companyName%></h2>
-	<form action="${req}/CompanyServlet" method="GET">
+	<h2>List of Interested Students</h2>
+	<form action="CompanyServlet" method="POST">
+		<input type="hidden" name="companyid" value="<%=companyid %>">
 		<table>
 			<tr>
-				<td class="right-align"><label for="regno">${studentRegno } : </label></td>
-				<input type="hidden" name="companyid" value="<%=companyid %>">
-				<td><input name="regno" type="text" id="regno" required></td>
+				<th>Select</th>
+				<th>Register No.</th>
+				<th>Name</th>
+				<th>Department</th>
+				<th>CGPA</th>
+				<th>Arrears</th>
 			</tr>
+			<%
+				CompanyDelegator companyDelegator = new CompanyDelegator();
+				ArrayList<StudentDetails> studentInterestedList = companyDelegator.getInterestedStudentsList(companyid);
+				for(int i = 0;i < studentInterestedList.size(); i++) {
+					StudentDetails studentDetails = studentInterestedList.get(i);
+			%>
+			<tr>
+				<td><input type="checkbox" name="studentsPlaced" value="<%=studentDetails.getRegno() %>"></td>
+				<td><%=studentDetails.getRegno() %></td>
+				<td><%=studentDetails.getName() %></td>
+				<td><%=studentDetails.getDeptName() %></td>
+				<td><%=studentDetails.getCgpa() %></td>
+				<td><%=studentDetails.getArrears() %></td>
+			</tr>
+			<%
+				}
+			%>
 		</table>
-		<p class="response-message"><%=responseMessage %></p>
-		<input type="submit" value="${enterStudent }">
+		<input type="submit" value="Submit">
 	</form>
 	<br />
-	<a href="${req}/index.jsp">Go to Home Page</a> </section>
+	<a href="index.jsp">Go to Home Page</a>
 	</section>
 </body>
 </html>

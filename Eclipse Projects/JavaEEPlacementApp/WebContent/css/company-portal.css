@@ -18,8 +18,7 @@ section {
 	background: url('../images/student-portal-background.jpg');
 	width: 80%;
 	height: 100vh;
-	left: 1vh;
-	margin: 2% auto;
+	margin: auto;
 	position: relative;
 }
 
@@ -29,7 +28,6 @@ input {
 
 form {
 	text-align: center;
-	padding-top: 10px;
 }
 
 table {

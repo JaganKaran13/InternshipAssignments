@@ -2,10 +2,10 @@ package com.ztech.dao;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.ztech.Constants.Constants;
-import com.ztech.beans.CompanyDetails;
 import com.ztech.beans.StudentDetails;
 import com.ztech.dbutils.DBUtils;
 
@@ -16,7 +16,7 @@ public class OthersDAOImpl implements OthersDAO {
 	private static PreparedStatement pst = null;
 	private static ResultSet rs = null;
 
-	public int checkEligibilty(int regno, int companyid) throws SQLException {
+	public String checkEligibilty(int regno, int companyid) throws SQLException {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DBUtils.getConnection();
@@ -26,12 +26,12 @@ public class OthersDAOImpl implements OthersDAO {
 			rs = pst.executeQuery();
 			if (!rs.next()) {
 				logger.warning("The company ID or registration number is wrong.");
-				return 0;
+				return "Enter a valid tregister number.";
 			}
 			if (rs.getFloat(1) < rs.getFloat(3) || rs.getInt(2) > rs.getInt(4)) {
-				return 1;
+				return "You are not eligible to sit for this company.";
 			} else {
-				return 2;
+				return "";
 			}
 		} catch (SQLException e) {
 			logger.warning("Error connecting with MySQL");
@@ -40,38 +40,7 @@ public class OthersDAOImpl implements OthersDAO {
 		} finally {
 			DBUtils.closeConnection(conn, pst, rs);
 		}
-		return -1;
-	}
-
-	public ArrayList<StudentDetails> displayDetailsDepartment(String deptName) throws SQLException {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			ArrayList<StudentDetails> studentArrayList = new ArrayList<StudentDetails>();
-			StudentDetails studentDetails;
-			conn = DBUtils.getConnection();
-			pst = (PreparedStatement) conn.prepareStatement(Constants.DISPLAY_DEPARTMENT_ALL);
-			pst.setString(1, deptName);
-			rs = pst.executeQuery();
-			while (rs.next()) {
-				studentDetails = new StudentDetails();
-				studentDetails.setRegno(rs.getInt(1));
-				studentDetails.setName(rs.getString(2));
-				studentDetails.setArrears(rs.getInt(5));
-				studentDetails.setCgpa(rs.getFloat(4));
-				studentDetails.setEmail(rs.getString(3));
-				studentDetails.setPlacedStatus(rs.getString(6));
-				studentDetails.setDeptName(rs.getString(7));
-				studentArrayList.add(studentDetails);
-			}
-			return studentArrayList;
-		} catch (SQLException e) {
-			logger.warning("Error connecting it with MySQL");
-		} catch (ClassNotFoundException e) {
-			logger.warning("Class not found for SQL Driver.");
-		} finally {
-			DBUtils.closeConnection(conn, pst, rs);
-		}
-		return null;
+		return "";
 	}
 
 	public int noOfStudentsPlaced(String deptName) throws SQLException {
@@ -165,31 +134,10 @@ public class OthersDAOImpl implements OthersDAO {
 		return "";
 	}
 
-	public String enterStudentsPlaced(int companyid, int regno) throws SQLException {
+	public boolean enterStudentsPlaced(int companyid, int regno) throws SQLException {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DBUtils.getConnection();
-			pst = (PreparedStatement) conn.prepareStatement(Constants.CHECK_STUDENT);
-			pst.setInt(1, regno);
-			rs = pst.executeQuery();
-			if (!rs.next()) {
-				logger.warning("The student registration number is wrong.");
-				return "The student registration number is wrong.";
-			}
-			pst = (PreparedStatement) conn.prepareStatement(Constants.CHECK_COMPANY);
-			pst.setInt(1, companyid);
-			rs = pst.executeQuery();
-			if (!rs.next()) {
-				logger.warning("The company ID entered is wrong.");
-				return "The company ID entered is wrong.";
-			}
-			pst = (PreparedStatement) conn.prepareStatement(Constants.VERIFY_PLACED_OR_NOT);
-			pst.setInt(1, regno);
-			rs = pst.executeQuery();
-			if (rs.next()) {
-				logger.warning("The student is already placed.");
-				return "The student is already placed.";
-			}
 			pst = (PreparedStatement) conn.prepareStatement(Constants.INSERT_STUDENTS_PLACED);
 			pst.setInt(1, companyid);
 			pst.setInt(2, regno);
@@ -198,7 +146,7 @@ public class OthersDAOImpl implements OthersDAO {
 			pst.setString(1, "yes");
 			pst.setInt(2, regno);
 			pst.executeUpdate();
-			return "The new entry is successfully done";
+			return true;
 		} catch (SQLException e) {
 			logger.warning("Error connecting it with MySQL");
 		} catch (ClassNotFoundException e) {
@@ -206,32 +154,38 @@ public class OthersDAOImpl implements OthersDAO {
 		} finally {
 			DBUtils.closeConnection(conn, pst, rs);
 		}
-		return "";
+		return false;
 	}
 
-	public ArrayList<CompanyDetails> getCompanyList() throws SQLException {
-		ArrayList<CompanyDetails> companyArrayList = new ArrayList<CompanyDetails>();
-		CompanyDetails companyDetails = null;
+	public ArrayList<StudentDetails> displayDetailsDepartment(String deptName) throws SQLException {
+		ArrayList<StudentDetails> studentArrayList = new ArrayList<StudentDetails>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
+			StudentDetails studentDetails;
 			conn = DBUtils.getConnection();
-			pst = (PreparedStatement) conn.prepareStatement(Constants.GET_COMPANY_LIST);
+			pst = (PreparedStatement) conn.prepareStatement(Constants.DISPLAY_DEPARTMENT_ALL);
+			pst.setString(1, deptName);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				companyDetails = new CompanyDetails();
-				companyDetails.setCompanyid(rs.getInt(1));
-				companyDetails.setName(rs.getString(2));
-				companyArrayList.add(companyDetails);
+				studentDetails = new StudentDetails();
+				studentDetails.setRegno(rs.getInt(1));
+				studentDetails.setName(rs.getString(2));
+				studentDetails.setArrears(rs.getInt(5));
+				studentDetails.setCgpa(rs.getFloat(4));
+				studentDetails.setEmail(rs.getString(3));
+				studentDetails.setPlacedStatus(rs.getString(6));
+				studentDetails.setDeptName(rs.getString(7));
+				studentArrayList.add(studentDetails);
 			}
-			return companyArrayList;
+			return studentArrayList;
 		} catch (SQLException e) {
-			logger.warning("Error connecting it with MySQL");
+			logger.warning("Error connecting it with MySQL.");
 		} catch (ClassNotFoundException e) {
-			logger.warning("Class not found for SQL Driver.");
+			logger.warning("Class for MySQL driver not found.");
 		} finally {
 			DBUtils.closeConnection(conn, pst, rs);
 		}
-		return null;
+		return studentArrayList;
 	}
 	
 	public ArrayList<String> getDepartmentList() throws SQLException {
@@ -293,6 +247,67 @@ public class OthersDAOImpl implements OthersDAO {
 			logger.warning("Class not found for SQL Driver.");
 		} finally {
 			DBUtils.closeConnection(conn, pst, rs);
+		}
+		return null;
+	}
+
+	public boolean insertStudentApplication(int regno, int companyid, String applyStatus) throws SQLException {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DBUtils.getConnection();
+			pst = (PreparedStatement) conn.prepareStatement(Constants.VERIFY_PLACED_OR_NOT);
+			pst.setInt(1, regno);
+			rs = pst.executeQuery();
+			if(rs.next()) {
+				logger.warning("The student is placed.");
+				return false;
+			}
+			pst = (PreparedStatement) conn.prepareStatement(Constants.CHECK_APPLY_STATUS);
+			pst.setInt(1, regno);
+			pst.setInt(2, companyid);
+			rs = pst.executeQuery();
+			if(rs.next()) {
+				logger.warning("Entry already present");
+				return true;
+			}
+			pst = (PreparedStatement) conn.prepareStatement(Constants.INSERT_APPLY_STATUS);
+			pst.setInt(1, regno);
+			pst.setInt(2, companyid);
+			pst.setString(3, applyStatus);
+			pst.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			logger.warning("Error connecting it with MySQL");
+		} catch (ClassNotFoundException e) {
+			logger.warning("Class not found for SQL Driver.");
+		} finally {
+			DBUtils.closeConnection(conn, pst, rs);
+		}
+		return false;
+	}
+	
+	public ArrayList<StudentDetails> getInterestedStudentsList(int companyid) throws SQLException {
+		ArrayList<StudentDetails> studentInterestedList  = new ArrayList<StudentDetails>();
+		StudentDetails studentDetails;
+		try {
+			conn = DBUtils.getConnection();
+			pst = (PreparedStatement) conn.prepareStatement(Constants.GET_INTERESTED_STUDENTS);
+			pst.setString(1, "no");
+			pst.setInt(2, companyid);
+			pst.setString(3, "yes");
+			rs = pst.executeQuery();
+			while(rs.next()) {
+				studentDetails = new StudentDetails();
+				studentDetails.setRegno(rs.getInt(1));
+				studentDetails.setName(rs.getString(2));
+				studentDetails.setDeptName(rs.getString(3));
+				studentDetails.setCgpa(rs.getFloat(4));
+				studentDetails.setArrears(rs.getInt(5));
+				studentInterestedList.add(studentDetails);
+			}
+			return studentInterestedList;
+		} catch(SQLException e) {
+			logger.log(Level.INFO, "Error retrieving interested students list from MySQL.");
 		}
 		return null;
 	}

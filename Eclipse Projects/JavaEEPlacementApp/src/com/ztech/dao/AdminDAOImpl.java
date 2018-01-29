@@ -88,67 +88,6 @@ public class AdminDAOImpl implements AdminDAO {
 		return false;
 	}
 
-	public boolean updateStudentDetails(StudentDetails studentDetails) throws SQLException {
-		try {
-			conn = DBUtils.getConnection();
-			pst = (PreparedStatement) conn.prepareStatement(Constants.CHECK_STUDENT);
-			pst.setInt(1, studentDetails.getRegno());
-			rs = pst.executeQuery();
-			if (!rs.next()) {
-				logger.warning("The student entry is not present");
-				return false;
-			}
-			pst = (PreparedStatement) conn.prepareStatement(Constants.UPDATE_STUDENT_DETAILS);
-			pst.setString(1, studentDetails.getName());
-			pst.setString(2, studentDetails.getEmail());
-			pst.setString(5, studentDetails.getPlacedStatus());
-			pst.setString(6, studentDetails.getDeptName());
-			pst.setInt(4, studentDetails.getArrears());
-			pst.setFloat(3, studentDetails.getCgpa());
-			pst.setString(7, "Raxit");
-			Calendar cal = Calendar.getInstance();
-			java.sql.Timestamp timestamp = new java.sql.Timestamp(cal.getTimeInMillis());
-			pst.setTimestamp(8, timestamp);
-			pst.setInt(9, studentDetails.getRegno());
-			pst.executeUpdate();
-			return true;
-		} catch (SQLException e) {
-			logger.warning("Problem updating the values into the database");
-		} finally {
-			DBUtils.closeConnection(conn, pst, null);
-		}
-		return false;
-	}
-
-	public boolean updateCompanyDetails(CompanyDetails companyDetails) throws SQLException {
-		try {
-			conn = DBUtils.getConnection();
-			pst = (PreparedStatement) conn.prepareStatement(Constants.CHECK_COMPANY);
-			pst.setInt(1, companyDetails.getCompanyid());
-			rs = pst.executeQuery();
-			if (!rs.next()) {
-				logger.warning("The company entry is not present");
-				return false;
-			}
-			pst = (PreparedStatement) conn.prepareStatement(Constants.UPDATE_COMPANY_DETAILS);
-			pst.setString(1, companyDetails.getName());
-			pst.setInt(3, companyDetails.getArrearCriteria());
-			pst.setFloat(2, companyDetails.getCgpaCriteria());
-			pst.setString(4, "Raxit");
-			Calendar cal = Calendar.getInstance();
-			java.sql.Timestamp timestamp = new java.sql.Timestamp(cal.getTimeInMillis());
-			pst.setTimestamp(5, timestamp);
-			pst.setInt(6, companyDetails.getCompanyid());
-			pst.executeUpdate();
-			return true;
-		} catch (SQLException e) {
-			logger.warning("Problem updating the values into the database");
-		} finally {
-			DBUtils.closeConnection(conn, pst, null);
-		}
-		return false;
-	}
-
 	public ArrayList<CompanyDetails> displayCompanyDetails() throws SQLException {
 		try {
 			CompanyDetails companyDetails;
@@ -176,13 +115,13 @@ public class AdminDAOImpl implements AdminDAO {
 		return null;
 	}
 
-	public ArrayList<StudentDetails> displayStudentDetails() throws SQLException {
+	public ArrayList<StudentDetails> displayStudentDetails(String orderBy) throws SQLException {
 		try {
 			ArrayList<StudentDetails> studentArrayList = new ArrayList<StudentDetails>();
 			StudentDetails studentDetails;
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DBUtils.getConnection();
-			pst = (PreparedStatement) conn.prepareStatement(Constants.DISPLAY_STUDENT_ALL);
+			pst = (PreparedStatement) conn.prepareStatement(Constants.DISPLAY_STUDENT_ALL + orderBy);
 			rs = pst.executeQuery();
 			while (rs.next()) {
 				studentDetails = new StudentDetails();

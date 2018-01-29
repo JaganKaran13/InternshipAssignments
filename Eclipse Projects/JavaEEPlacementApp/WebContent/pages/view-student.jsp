@@ -13,7 +13,15 @@
 <link rel="stylesheet" href="css/view-details.css">
 </head>
 <body>
-<%@ page import="java.util.*, com.ztech.dao.*, com.ztech.beans.*" %>
+<%@ page import="java.util.*, com.ztech.dao.*, com.ztech.beans.*, com.ztech.delegates.AdminDelegator" %>
+	<%
+		String orderBy = "";
+		if(request.getAttribute("orderBy") == null) {
+			orderBy = "regno";
+		} else {
+			orderBy = (String) request.getAttribute("orderBy");
+		}
+	%>
 	<div class="navbar">
 		<a href="pages/admin.jsp">Home</a>
 		<a href="pages/insert-student.jsp">Insert Student</a>
@@ -22,11 +30,22 @@
 		<a href="pages/view-company.jsp">View Company</a>
 		<a href="index.jsp">Exit</a>
 	</div>
+	<form action="ViewStudentsServlet" method="POST">
+		<select name="orderByCriteria">
+			<option value="regno">Register No.</option>
+			<option value="name">Name</option>
+			<option value="deptname">Dept Name</option>
+			<option value="arrears">Arrears</option>
+			<option value="cgpa">CGPA</option>
+		</select>
+		<input type="submit" value="Fetch Details">
+	</form>
 	<table>
 		<thead>
 			<tr>
-				<th>Register Number</th>
+				<th>Register No.</th>
 				<th>Name</th>
+				<th>Dept Name</th>
 				<th>Arrears</th>
 				<th>CGPA</th>
 				<th>Placed Status</th>
@@ -34,22 +53,20 @@
 		</thead>
 		<tbody>
 		<%
-		ArrayList<StudentDetails> studentArrayList = new ArrayList<StudentDetails>();
-		StudentDetails studentDetails;
-		AdminDAO adminDAO = new AdminDAOImpl();
-		studentArrayList = adminDAO.displayStudentDetails();
-		for(int i = 0;i < studentArrayList.size(); i++) {
-			studentDetails = studentArrayList.get(i);
+			AdminDelegator adminDelegator = new AdminDelegator();
+			ArrayList<StudentDetails> studentArrayList = adminDelegator.displayStudentDetails(orderBy);
+			for(int i = 0;i < studentArrayList.size(); i++) {
 		%>
 		<tr>
-			<td><%=studentDetails.getRegno() %></td>
-			<td><%=studentDetails.getName() %></td>
-			<td><%=studentDetails.getArrears() %></td>
-			<td><%=studentDetails.getCgpa() %></td>
-			<td><%=studentDetails.getPlacedStatus() %></td>
+			<td><%=studentArrayList.get(i).getRegno() %></td>
+			<td><%=studentArrayList.get(i).getName() %></td>
+			<td><%=studentArrayList.get(i).getDeptName() %></td>
+			<td><%=studentArrayList.get(i).getArrears() %></td>
+			<td><%=studentArrayList.get(i).getCgpa() %></td>
+			<td><%=studentArrayList.get(i).getPlacedStatus() %></td>
 		</tr>	
 		<%
-		}
+			}
 		%>
 		</tbody>
 	</table>

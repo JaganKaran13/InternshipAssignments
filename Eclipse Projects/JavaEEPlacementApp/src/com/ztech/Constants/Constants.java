@@ -7,7 +7,7 @@ public class Constants {
 	public static final String CHECK_ELIGIBILITY = "select cgpa, arrears, cgpacriteria, arrearcriteria from student, company where regno = ? and companyid = ?";
 	public static final String DISPLAY_COMPANY_ALL = "select * from company";
 	public static final String DISPLAY_COMPANY_ONE = "select * from company where companyid = ?";
-	public static final String DISPLAY_STUDENT_ALL = "select * from student";
+	public static final String DISPLAY_STUDENT_ALL = "select * from student order by ";
 	public static final String DISPLAY_STUDENT_ONE = "select * from student where regno = ";
 	public static final String DISPLAY_DEPARTMENT_ALL = "select * from student where deptname = ?";
 	public static final String DISPLAY_DEPARTMENT_ONE = "select * from student where deptname = ? and regno = ?";
@@ -29,4 +29,9 @@ public class Constants {
 	public static final String GET_STUDENTS_COUNT_LIST = "select count(*) from student group by deptname order by deptname";
 	public static final String VALIDATE_LOGIN = "select * from company where companyid = ? and password = ?";
 	public static final String GET_COMPANY_NAME = "select name from company where companyid = ?";
+	public static final String INSERT_APPLY_STATUS = "insert into applystatus values(?,?,?)";
+	public static final String CHECK_APPLY_STATUS = "select * from applystatus where regno=? and companyid=?";
+	public static final String GET_INTERESTED_STUDENTS = "select student.regno, name, deptname, cgpa, "
+			+ "arrears from student, applystatus where placedstatus=? and applystatus.regno = student.regno and "
+			+ "applystatus.companyid=? and applystatus.interested=?";
 }

@@ -34,7 +34,7 @@ public class AdminValidator {
 		email = studentDetails.getEmail();
 		arrears = studentDetails.getArrears();
 		cgpa = studentDetails.getCgpa();
-		if(deptName.matches(".*\\d+.*")) {
+		if(deptName.matches(".*\\d+.*")								) {
 			return "The department name	contains numbers.";
 		} else if(studentName.matches(".*\\d+.*")) {
 			return "The student name contains numbers.";
