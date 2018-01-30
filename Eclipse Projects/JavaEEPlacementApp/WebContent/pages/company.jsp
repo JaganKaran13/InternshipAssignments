@@ -16,10 +16,6 @@
 </head>
 <body>
 	<%@page import="com.ztech.delegates.*, com.ztech.beans.StudentDetails, java.util.*" %>
-	<% 
-		String companyName = (String) request.getAttribute("companyName");
-		String companyid = (String) request.getAttribute("companyid");
-	%>
 	<fmt:bundle basename="com.ztech.bundles.config" >
 		<fmt:message key="COMPANY_HEADER" var="companyHeader" />
 		<fmt:message key="STUDENT_REGNO" var="studentRegno" />
@@ -43,10 +39,10 @@
 	</div>
 	<hr />
 	<section>
-	<h2>Welcome <%=companyName%></h2>
+	<h2>Welcome ${requestScope.companyName}</h2>
 	<h2>List of Interested Students</h2>
 	<form action="CompanyServlet" method="POST">
-		<input type="hidden" name="companyid" value="<%=companyid %>">
+		<input type="hidden" name="companyid" value="${requestScope.companyid}">
 		<table>
 			<tr>
 				<th></th>
@@ -58,17 +54,19 @@
 			</tr>
 			<%
 				CompanyDelegator companyDelegator = new CompanyDelegator();
+				String companyid = request.getAttribute("companyid");
 				ArrayList<StudentDetails> studentInterestedList = companyDelegator.getInterestedStudentsList(companyid);
 				for(int i = 0;i < studentInterestedList.size(); i++) {
-					StudentDetails studentDetails = studentInterestedList.get(i);
 			%>
 			<tr>
-				<td><input type="checkbox" name="studentsPlaced" value="<%=studentDetails.getRegno() %>"></td>
-				<td><%=studentDetails.getRegno() %></td>
-				<td><%=studentDetails.getName() %></td>
-				<td><%=studentDetails.getDeptName() %></td>
-				<td><%=studentDetails.getCgpa() %></td>
-				<td><%=studentDetails.getArrears() %></td>
+				<td>
+					<input type="checkbox" name="studentsPlaced" value="<%=studentInterestedList.get(i).getRegno() %>">
+				</td>
+				<td><%=studentInterestedList.get(i).getRegno() %></td>
+				<td><%=studentInterestedList.get(i).getName() %></td>
+				<td><%=studentInterestedList.get(i).getDeptName() %></td>
+				<td><%=studentInterestedList.get(i).getCgpa() %></td>
+				<td><%=studentInterestedList.get(i).getArrears() %></td>
 			</tr>
 			<%
 				}

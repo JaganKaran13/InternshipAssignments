@@ -4,7 +4,7 @@
 	background-size: cover;
 	height: 100vh;
 	float: left;
-	width: 48vw;
+	width: 65vw;
 }
 
 h2 {
@@ -15,7 +15,7 @@ h2 {
 	text-align: center;
 	height: 100vh;
 	float: left;
-	width: 47vw;
+	width: 31.24vw;
 	background: #30C2FF;
 }
 
@@ -51,11 +51,8 @@ img:hover {
 	}
 
 	.college-icon-section {
+		width: 50%;
 		float: left;
-	}
-	
-	.align-center {
-		text-align: center;
 	}
 }
 

@@ -23,10 +23,10 @@ public class LoginValidator extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html");
-		String deptname = request.getParameter("deptname");
+		String deptName = request.getParameter("deptname").toUpperCase();
 		String password = request.getParameter("password");
 		CollegeDelegator cd = new CollegeDelegator();
-		int choice = cd.validateCollegeLogin(deptname.toUpperCase(), password);
+		int choice = cd.validateCollegeLogin(deptName, password);
 		HttpSession session = request.getSession();
 		RequestDispatcher rd;
 		switch (choice) {
@@ -39,7 +39,11 @@ public class LoginValidator extends HttpServlet {
 			rd.forward(request, response);
 			break;
 		case 3:
-			session.setAttribute("deptname", deptname.toUpperCase());
+			HODDelegator hodDelegator = new HODDelegator();
+			session.setAttribute("deptName", deptName);
+			request.setAttribute("studentsPlacedCount", hodDelegator.noOfStudentsPlaced(deptName));
+			request.setAttribute("placementPercentage", hodDelegator.placementPercentage(deptName));
+			request.setAttribute("studentDepartmentList", hodDelegator.displayDetailsDepartment(deptName));
 			rd = request.getRequestDispatcher("./pages/hod.jsp");
 			rd.forward(request, response);
 			break;

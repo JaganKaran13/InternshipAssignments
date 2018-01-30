@@ -43,14 +43,12 @@
 	<hr />
 	<%
 		String deptName = (String) session.getAttribute("deptname");
-		OthersDAO othersDAO = new OthersDAOImpl();
-		ArrayList<StudentDetails> studentArrayList = othersDAO.displayDetailsDepartment(deptName);
-		StudentDetails studentDetails;
+		ArrayList<StudentDetails> studentArrayList = (ArrayList<StudentDetails>) request.getAttribute("studentDepartmentList");
 	%>
 	<section>
-	<h2><%=deptName %> ${hodSubHeader}</h2>
-	<h2>${studentsPlacedCount} : <%=othersDAO.noOfStudentsPlaced(deptName) %></h2>
-	<h2>${placementPercentage} : <%=othersDAO.placementPercentage(deptName) %></h2>
+	<h2>${sessionScope.deptname} ${hodSubHeader}</h2>
+	<h2>${studentsPlacedCount} : ${requestScope.studentsPlacedCount}</h2>
+	<h2>${placementPercentage} : ${requestScope.placementPercentage}</h2>
 	<table>
 		<thead>
 			<tr>
@@ -63,15 +61,13 @@
 		</thead>
 		<%
 		for (int i = 0; i < studentArrayList.size(); i++) {
-			studentDetails = new StudentDetails();
-			studentDetails = studentArrayList.get(i);
 		%>
 		<tr>
-			<td><%=studentDetails.getRegno()%></td>
-			<td><%=studentDetails.getName()%></td>
-			<td><%=studentDetails.getCgpa()%></td>
-			<td><%=studentDetails.getArrears()%></td>
-			<td><%=studentDetails.getPlacedStatus()%></td>
+			<td><%=studentArrayList.get(i).getRegno()%></td>
+			<td><%=studentArrayList.get(i).getName()%></td>
+			<td><%=studentArrayList.get(i).getCgpa()%></td>
+			<td><%=studentArrayList.get(i).getArrears()%></td>
+			<td><%=studentArrayList.get(i).getPlacedStatus()%></td>
 		</tr>
 	<%
 		}

@@ -12,21 +12,17 @@
 <body>
 	<div class="home-page-image"></div>
 	<div class="portal-icon-links">
-		<div class="align-center">
-			<div class="icon college-icon-section">
-				<h2>College Portal</h2>
-				<a href="./pages/college-login.jsp">
-					<img class="college-icon" src="./images/college-icon.jpg" alt="">
-				</a>
-			</div>
+		<div class="icon college-icon-section">
+			<h2>College Portal</h2>
+			<a href="./pages/college-login.jsp">
+				<img class="college-icon" src="./images/college-icon.jpg" alt="">
+			</a>
 		</div>
-		<div class="align-center">
-			<div class="icon student-icon-section">
-				<h2>Student Portal</h2>
-				<a href="./pages/student.jsp">
-					<img class="student-icon" src="./images/student-icon.jpg" alt="">
-				</a>
-			</div>
+		<div class="icon student-icon-section">
+			<h2>Student Portal</h2>
+			<a href="./pages/student.jsp">
+				<img class="student-icon" src="./images/student-icon.jpg" alt="">
+			</a>
 		</div>
 		<div class="icon student-icon-section">
 			<h2>Company Portal</h2>
