@@ -40,13 +40,12 @@
 	CompanyDetails companyDetails;
 	companyArrayList = adminDAO.displayCompanyDetails();
 	for(int i = 0;i < companyArrayList.size(); i++) {
-		companyDetails = companyArrayList.get(i);
 	%>
 			<tr>
-				<td><%=companyDetails.getCompanyid() %></td>
-				<td><%=companyDetails.getName() %></td>
-				<td><%=companyDetails.getArrearCriteria() %></td>
-				<td><%=companyDetails.getCgpaCriteria() %></td>
+				<td><%=companyArrayList.get(i).getCompanyid() %></td>
+				<td><%=companyArrayList.get(i).getName() %></td>
+				<td><%=companyArrayList.get(i).getArrearCriteria() %></td>
+				<td><%=companyArrayList.get(i).getCgpaCriteria() %></td>
 			</tr>
 	<%
 	}

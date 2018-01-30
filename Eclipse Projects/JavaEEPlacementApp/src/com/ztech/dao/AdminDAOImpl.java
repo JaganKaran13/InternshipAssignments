@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.ztech.Constants.Constants;
@@ -28,7 +29,7 @@ public class AdminDAOImpl implements AdminDAO {
 			pst.setInt(1, studentdet.getRegno());
 			rs = pst.executeQuery();
 			if (rs.next()) {
-				logger.severe("The student entry is already present");
+				logger.log(Level.WARNING, "The student entry is already present");
 				return false;
 			}
 			pst = (PreparedStatement) conn.prepareStatement(Constants.INSERT_STUDENT_DETAILS);
@@ -157,7 +158,7 @@ public class AdminDAOImpl implements AdminDAO {
 				return true;
 			}
 		} catch (SQLException e) {
-			logger.severe("Error connecting it with MySQL");
+			logger.warning("Error connecting it with MySQL");
 		} catch (ClassNotFoundException e) {
 			logger.warning("Class for MySQL driver not found.");
 		} finally {
@@ -166,4 +167,26 @@ public class AdminDAOImpl implements AdminDAO {
 		return false;
 	}
 
+	public String getPlacedInCompanyName(int regno) {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DBUtils.getConnection();
+			pst = (PreparedStatement) conn.prepareStatement(Constants.GET_PLACED_IN_COMPANY_NAME);
+			pst.setInt(1, regno);
+			pst.setString(2, "yes");
+			rs = pst.executeQuery();
+			if(!rs.next()) {
+				return "-";
+			}
+			return rs.getString(1);
+		}  catch (SQLException e) {
+			logger.log(Level.WARNING, "Error connecting it with MySQL");
+		} catch (ClassNotFoundException e) {
+			logger.log(Level.WARNING, "Error finding class for MySQL driver");
+		} finally {
+			DBUtils.closeConnection(conn, pst, rs);
+		}
+		return "";
+	}
+	
 }

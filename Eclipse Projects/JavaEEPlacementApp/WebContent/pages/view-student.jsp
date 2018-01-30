@@ -13,14 +13,13 @@
 <base href="${req}/" />
 <link rel="stylesheet" href="css/admin-navbar.css">
 <link rel="stylesheet" href="css/view-details.css">
+<link rel="stylesheet" href="css/view-student-input.css">
 </head>
 <body>
 <%@ page import="java.util.*, com.ztech.dao.*, com.ztech.beans.*, com.ztech.delegates.AdminDelegator" %>
 	<%
-		String orderBy = "";
-		if(request.getAttribute("orderBy") == null) {
-			orderBy = "regno";
-		} else {
+		String orderBy = "regno";
+		if(request.getAttribute("orderBy") != null) {
 			orderBy = (String) request.getAttribute("orderBy");
 		}
 	%>
@@ -47,12 +46,13 @@
 	<table>
 		<thead>
 			<tr>
-				<th>Register No.</th>
+				<th>Reg No.</th>
 				<th>Name</th>
 				<th>Dept Name</th>
 				<th>Arrears</th>
 				<th>CGPA</th>
-				<th>Placed Status</th>
+				<th>Placed</th>
+				<th>Company</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -68,6 +68,7 @@
 			<td><%=studentArrayList.get(i).getArrears() %></td>
 			<td><%=studentArrayList.get(i).getCgpa() %></td>
 			<td><%=studentArrayList.get(i).getPlacedStatus() %></td>
+			<td><%=adminDelegator.getPlacedInCompanyName(studentArrayList.get(i).getRegno()) %></td>
 		</tr>	
 		<%
 			}

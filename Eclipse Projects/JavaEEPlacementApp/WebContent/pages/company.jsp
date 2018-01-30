@@ -74,6 +74,7 @@
 				}
 			%>
 		</table>
+		<p class="response-message">${requestScope.responseMessage}</p>
 		<input type="submit" value="Submit">
 	</form>
 	<br />

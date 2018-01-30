@@ -14,9 +14,19 @@ th {
 	font-size: 25px;
 }
 
+@media only screen and (max-width: 800px) {
+	th, td {
+		font-size: 16px;
+	}
+	
+	th, td {
+		padding: 8px;
+	}
+}
+
 @media only screen and (max-width: 400px) {
 	th, td {
-		font-size: 14px;
+		font-size: 11px;
 	}
 	
 	th, td {

@@ -308,6 +308,8 @@ public class OthersDAOImpl implements OthersDAO {
 			return studentInterestedList;
 		} catch(SQLException e) {
 			logger.log(Level.INFO, "Error retrieving interested students list from MySQL.");
+		} finally {
+			DBUtils.closeConnection(conn, pst, rs);
 		}
 		return null;
 	}

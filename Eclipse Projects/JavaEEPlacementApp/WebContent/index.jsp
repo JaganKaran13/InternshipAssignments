@@ -10,14 +10,30 @@
 <link rel="stylesheet" href="./css/home-page.css">
 </head>
 <body>
-	<div class="college col-sm-12">
-	<a href="./pages/college-login.jsp">College Portal</a>
-	</div>
-	<div class="company col-sm-12">
-	<a href="./pages/company-login.jsp">Company Portal</a>
-	</div>
-	<div class="student col-sm-12">
-	<a href="./pages/student.jsp">Student Portal</a>
+	<div class="home-page-image"></div>
+	<div class="portal-icon-links">
+		<div class="align-center">
+			<div class="icon college-icon-section">
+				<h2>College Portal</h2>
+				<a href="./pages/college-login.jsp">
+					<img class="college-icon" src="./images/college-icon.jpg" alt="">
+				</a>
+			</div>
+		</div>
+		<div class="align-center">
+			<div class="icon student-icon-section">
+				<h2>Student Portal</h2>
+				<a href="./pages/student.jsp">
+					<img class="student-icon" src="./images/student-icon.jpg" alt="">
+				</a>
+			</div>
+		</div>
+		<div class="icon student-icon-section">
+			<h2>Company Portal</h2>
+			<a href="./pages/company-login.jsp">
+				<img class="company-icon" src="./images/company-icon.jpg" alt="">
+			</a>
+		</div>
 	</div>
 </body>
 </html>

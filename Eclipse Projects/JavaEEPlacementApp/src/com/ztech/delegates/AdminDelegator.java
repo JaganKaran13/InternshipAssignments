@@ -52,15 +52,18 @@ public class AdminDelegator {
 		}	
 	}
 	
-	public ArrayList<StudentDetails> displayStudentDetails(String orderBy) {
+	public ArrayList<StudentDetails> displayStudentDetails(String orderBy) throws SQLException {
 		ArrayList<StudentDetails> studentArrayList = new ArrayList<StudentDetails>();
-		AdminDAO adminDAO = new AdminDAOImpl();
-		try {
-			studentArrayList = adminDAO.displayStudentDetails(orderBy);
-		} catch (SQLException e) {
-			
-		}
+		adminDAO = new AdminDAOImpl();
+		studentArrayList = adminDAO.displayStudentDetails(orderBy);
 		return studentArrayList;
 	}
 
+	public String getPlacedInCompanyName(int regno) {
+		String companyName;
+		adminDAO = new AdminDAOImpl();
+		companyName = adminDAO.getPlacedInCompanyName(regno);
+		return companyName;
+	}
+	
 }

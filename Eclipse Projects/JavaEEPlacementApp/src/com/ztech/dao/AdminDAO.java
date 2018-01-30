@@ -16,4 +16,6 @@ public interface AdminDAO {
 	public ArrayList<StudentDetails> displayStudentDetails(String orderBy) throws SQLException;
 	
 	public boolean validateCompany(int companyid, String password) throws SQLException;
+	
+	public String getPlacedInCompanyName(int regno);
 }

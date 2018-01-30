@@ -1,8 +1,8 @@
 package com.ztech.servlets;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,8 +22,8 @@ public class CompanyServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CompanyDelegator companyDelegator = new CompanyDelegator();
-		companyDelegator.insertStudentsPlaced(request, response);
 		int companyid = Integer.parseInt(request.getParameter("companyid"));
+		request.setAttribute("responseMessage", companyDelegator.insertStudentsPlaced(request, response));
 		request.setAttribute("companyid", request.getParameter("companyid"));
 		request.setAttribute("companyName", companyDelegator.getCompanyName(companyid));
 		RequestDispatcher rd = request.getRequestDispatcher("./pages/company.jsp");

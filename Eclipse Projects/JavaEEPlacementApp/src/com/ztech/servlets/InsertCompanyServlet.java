@@ -25,23 +25,25 @@ public class InsertCompanyServlet extends HttpServlet {
 			throws ServletException, IOException {
 		RequestDispatcher rd;
 		try {
-			int companyid = Integer.parseInt(request.getParameter("companyid"));
 			String companyName = request.getParameter("companyName");
+			if (companyName.equals("")) {
+				request.setAttribute("responseMessage", "Enter all the fields");
+				return;
+			}
+			int companyid = Integer.parseInt(request.getParameter("companyid"));
 			int arrearCriteria = Integer.parseInt(request.getParameter("arrearCriteria"));
 			float cgpaCriteria = Float.parseFloat(request.getParameter("cgpaCriteria"));
 			String companyPassword = request.getParameter("companyPassword");
 			AdminDelegator adminDelegator = new AdminDelegator();
-			String responseMessage = adminDelegator.insertCompanyDetails(companyid, companyName, arrearCriteria, cgpaCriteria,
-					companyPassword); 
+			String responseMessage = adminDelegator.insertCompanyDetails(companyid, companyName, arrearCriteria,
+					cgpaCriteria, companyPassword);
 			if (!responseMessage.equals("")) {
 				request.setAttribute("responseMessage", "The company details are inserted.");
-				rd = request.getRequestDispatcher("./pages/insert-company.jsp");
-				rd.forward(request, response);
 			} else {
 				request.setAttribute("responseMessage", responseMessage);
-				rd = request.getRequestDispatcher("./pages/insert-company.jsp");
-				rd.forward(request, response);
 			}
+			rd = request.getRequestDispatcher("./pages/insert-company.jsp");
+			rd.forward(request, response);
 		} catch (NumberFormatException e) {
 			logger.warning("The details entered are of different format.");
 			request.setAttribute("responseMessage", "Enter the details properly.");

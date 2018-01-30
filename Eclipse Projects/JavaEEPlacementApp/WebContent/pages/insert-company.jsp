@@ -23,14 +23,6 @@
 		<fmt:message key="INSERT_COMPANY_PASSWORD" var="companyPassword"/>
 		<fmt:message key="INSERT_DETAILS_BUTTON" var="insertDetailsButton" />
 	</fmt:bundle>
-	<%
-		String responseMessage;
-		if (request.getAttribute("responseMessage") == null) {
-			responseMessage = "";
-		} else {
-			responseMessage = (String) request.getAttribute("errorMessage");
-		}
-	%>
 	<div class="navbar">
 		<a href="pages/admin.jsp">HOME</a> <a href="pages/insert-student.jsp">Insert
 			Student</a> <a href="pages/view-student.jsp">View Student</a> <a
@@ -67,7 +59,7 @@
 					id="company-password"></td>
 			</tr>
 		</table>
-		<p class="error-message"><%=responseMessage%></p>
+		<p class="error-message">${requestScope.responseMessage}</p>
 		<input type="submit" value="${insertDetailsButton}">
 	</form>
 </body>

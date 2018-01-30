@@ -1,61 +1,67 @@
 @charset "ISO-8859-1";
-.college {
-	height: 50vh;
-	background: url('../images/college.jpg') no-repeat center;
-}
-
-.college a {
-	color: white;
-	left: 42%;
-}
-
-.company a {
-	top: 55%;
-	color: black;
-	left: 30%;
-}
-
-.student a {
-	left: 35%;
-}
-
-.company {
-	width: 50%;
-	height: 50vh;
-	float: left;
-	background: url('../images/company.jpg') no-repeat center;
+.home-page-image {
+	background: url('../images/home-page-background.jpg') no-repeat center;
 	background-size: cover;
-}
-
-.student {
-	width: 50%;
-	height: 50vh;
+	height: 100vh;
 	float: left;
-	background: url('../images/student.jpg') no-repeat center;
-	background-size: cover;
+	width: 48vw;
 }
 
-div {
-	position: relative;
+h2 {
+	color: red;
 }
 
-a {
-	top: 48%;
-	position: absolute;
-	text-decoration: none;
-	font-weight: bold;
-	font-size: 30px;
+.portal-icon-links {
+	text-align: center;
+	height: 100vh;
+	float: left;
+	width: 47vw;
+	background: #30C2FF;
 }
 
-a:hover {
-	text-decoration: underline;
+.college-icon {
+	height: 120px;
+	width: 120px;
 }
 
-@media only screen and (max-width: 500px) {
-	.col-sm-12 {
+.student-icon, .company-icon {
+	height: 120px;
+	width: 120px;
+}
+
+img {
+	border-radius: 50%;
+}
+
+img:hover {
+	border: 5px solid red;
+}
+
+@media only screen and (max-width: 800px) {
+	.home-page-image {
+		margin-top: 10px;
+		width: 100vw;
+		height: 400px;
 		float: none;
-		width: 90%;
-		height: 40vh;
-		margin: 10px auto;
+	}
+
+	.portal-icon-links {
+		width: 100vw;
+		height: 70vh;
+	}
+
+	.college-icon-section {
+		float: left;
+	}
+	
+	.align-center {
+		text-align: center;
+	}
+}
+
+@media only screen and (max-width: 565px) {
+	.home-page-image {
+		background-size: cover;
+		height: 300px;
 	}
 }

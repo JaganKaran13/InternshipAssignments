@@ -1,26 +1,6 @@
 @charset "ISO-8859-1";
-table {
-	margin: 5% auto;
-}
-
-td, th {
-	padding: 15px;
-}
-
-form {
+.form {
 	text-align: center;
-}
-
-.error-message {
-	color: white;
-}
-
-.right-align {
-	text-align: right;
-}
-
-input {
-	outline: none;
 }
 
 input[type=submit] {
@@ -28,6 +8,7 @@ input[type=submit] {
 	background: blue;
 	border: none;
 	cursor: pointer;
+	font-size: 20px;
 	border-radius: 5px;
 }
 

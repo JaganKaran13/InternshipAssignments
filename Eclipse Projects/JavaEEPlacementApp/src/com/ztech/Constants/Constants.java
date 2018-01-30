@@ -34,4 +34,6 @@ public class Constants {
 	public static final String GET_INTERESTED_STUDENTS = "select student.regno, name, deptname, cgpa, "
 			+ "arrears from student, applystatus where placedstatus=? and applystatus.regno = student.regno and "
 			+ "applystatus.companyid=? and applystatus.interested=?";
+	public static final String GET_PLACED_IN_COMPANY_NAME = "select company.name from company, student, studentsplaced where studentsplaced.regno = ? " + 
+			"and studentsplaced.companysno = company.companyid and student.placedstatus=?";
 }

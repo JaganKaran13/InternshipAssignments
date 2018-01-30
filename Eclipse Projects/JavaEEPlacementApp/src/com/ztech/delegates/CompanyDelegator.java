@@ -60,10 +60,13 @@ public class CompanyDelegator {
 		return null;
 	}
 	
-	public void insertStudentsPlaced(HttpServletRequest request, HttpServletResponse response) {
+	public String insertStudentsPlaced(HttpServletRequest request, HttpServletResponse response) {
 		int companyid = Integer.parseInt(request.getParameter("companyid"));
 		String[] studentsPlacedList = request.getParameterValues("studentsPlaced");
 		OthersDAO othersDAO = new OthersDAOImpl();
+		if(studentsPlacedList == null) {
+			return "Select the students who got placed";
+		}
 		for(int i = 0; i < studentsPlacedList.length; i++) {
 			try {
 				othersDAO.enterStudentsPlaced(companyid, Integer.parseInt(studentsPlacedList[i]));
@@ -73,6 +76,7 @@ public class CompanyDelegator {
 				logger.log(Level.WARNING, "Error entering the data in the database.");
 			}
 		}
+		return "The students selected are placed in your company";
 	}
 
 }
