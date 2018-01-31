@@ -6,15 +6,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.ztech.Constants.Constants;
+import com.ztech.beans.FetchApplicationBean;
 import com.ztech.beans.StudentDetails;
+import com.ztech.beans.YearDataBean;
 import com.ztech.dbutils.DBUtils;
 
 public class OthersDAOImpl implements OthersDAO {
 
-	private static final Logger logger = Logger.getLogger(OthersDAOImpl.class.getName());
+	private final Logger logger = Logger.getLogger(OthersDAOImpl.class.getName());
 	private static Connection conn = null;
 	private static PreparedStatement pst = null;
-	private static ResultSet rs = null;
+	private static ResultSet rs = null, rs1 = null;
 
 	public String checkEligibilty(int regno, int companyid) throws SQLException {
 		try {
@@ -134,6 +136,27 @@ public class OthersDAOImpl implements OthersDAO {
 		return "";
 	}
 
+	public void updateStudentPlacedCount() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DBUtils.getConnection();
+			pst = (PreparedStatement) conn.prepareStatement(Constants.GET_DETAILS_CURRENT_YEAR);
+			pst.setInt(1, 2018);
+			rs = pst.executeQuery();
+			rs.next();
+			pst = (PreparedStatement) conn.prepareStatement(Constants.UPDATE_DETAILS_CURRENT_YEAR);
+			pst.setInt(1, rs.getInt(3) + 1);
+			pst.setInt(2, 2018);
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			logger.log(Level.WARNING, "Error connecting it with MySQL");
+		} catch (ClassNotFoundException e) {
+			logger.log(Level.WARNING, "Class not found for SQL Driver.");
+		} finally {
+			DBUtils.closeConnection(conn, pst, rs);
+		} 
+	}
+	
 	public boolean enterStudentsPlaced(int companyid, int regno) throws SQLException {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -146,6 +169,12 @@ public class OthersDAOImpl implements OthersDAO {
 			pst.setString(1, "yes");
 			pst.setInt(2, regno);
 			pst.executeUpdate();
+			pst = (PreparedStatement) conn.prepareStatement(Constants.UPDATE_APPLY_STATUS);
+			pst.setInt(1, regno);
+			pst.setInt(2, companyid);
+			pst.setString(3, "placed");
+			pst.executeUpdate();
+			updateStudentPlacedCount();
 			return true;
 		} catch (SQLException e) {
 			logger.warning("Error connecting it with MySQL");
@@ -206,7 +235,7 @@ public class OthersDAOImpl implements OthersDAO {
 		} finally {
 			DBUtils.closeConnection(conn, pst, rs);
 		}
-		return null;
+		return departmentList;
 	}
 	
 	public ArrayList<Integer> getTotalStudentsList() throws SQLException {
@@ -267,7 +296,11 @@ public class OthersDAOImpl implements OthersDAO {
 			pst.setInt(2, companyid);
 			rs = pst.executeQuery();
 			if(rs.next()) {
-				logger.warning("Entry already present");
+				pst = (PreparedStatement) conn.prepareStatement(Constants.UPDATE_APPLY_STATUS);
+				pst.setInt(1, regno);
+				pst.setInt(2, companyid);
+				pst.setString(3, applyStatus);
+				pst.executeUpdate();
 				return true;
 			}
 			pst = (PreparedStatement) conn.prepareStatement(Constants.INSERT_APPLY_STATUS);
@@ -307,11 +340,75 @@ public class OthersDAOImpl implements OthersDAO {
 			}
 			return studentInterestedList;
 		} catch(SQLException e) {
-			logger.log(Level.INFO, "Error retrieving interested students list from MySQL.");
+			logger.log(Level.WARNING, "Error retrieving interested students list from MySQL.");
 		} finally {
 			DBUtils.closeConnection(conn, pst, rs);
 		}
 		return null;
 	}
+
+	public ArrayList<FetchApplicationBean> getApplicationStatus(int regno) {
+		ArrayList<FetchApplicationBean> applicationStatusList = new ArrayList<FetchApplicationBean>();
+		FetchApplicationBean fetchApplication;
+		int companyid;
+		try {
+			conn = DBUtils.getConnection();
+			pst = (PreparedStatement) conn.prepareStatement(Constants.GET_COMPANY_LIST);
+			rs = pst.executeQuery();
+			while(rs.next()) {
+				companyid = rs.getInt(1);
+				pst = (PreparedStatement) conn.prepareStatement(Constants.FETCH_APPLICATIONS);
+				pst.setInt(1, regno);
+				pst.setInt(2, companyid);
+				rs1 = pst.executeQuery();
+				fetchApplication = new FetchApplicationBean();
+				if(!rs1.next()) {
+					fetchApplication.setCompanyName(rs.getString(2));
+					fetchApplication.setApplicationStatus("-");
+					fetchApplication.setCompanyid(companyid);
+				} else {
+					fetchApplication.setCompanyName(rs1.getString(1));
+					fetchApplication.setCompanyid(companyid);
+					if(rs1.getString(2).equals("yes")) {
+						fetchApplication.setApplicationStatus("Applied");
+					} else if(rs1.getString(2).equals("no")) {
+						fetchApplication.setApplicationStatus("Declined");
+					} else {
+						fetchApplication.setApplicationStatus("Placed");
+					}
+				}
+				applicationStatusList.add(fetchApplication);
+			}
+			return applicationStatusList;
+		} catch(SQLException e) {
+			logger.log(Level.WARNING, "Error retrieving interested students list from MySQL.");
+		} finally {
+			DBUtils.closeConnection(conn, pst, rs);
+			DBUtils.closeConnection(null, null, rs1);
+		}
+		return null;
+	}
 	
+	public ArrayList<YearDataBean> getByYearDetails() {
+		ArrayList<YearDataBean> yearBeanList = new ArrayList<YearDataBean>();
+		YearDataBean yearDataBean;
+		try {
+			conn = DBUtils.getConnection();
+			pst = (PreparedStatement) conn.prepareStatement(Constants.GET_DETAILS_BY_YEAR);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				yearDataBean = new YearDataBean();
+				yearDataBean.setYear(rs.getInt(1));
+				yearDataBean.setStudentCount(rs.getInt(2));
+				yearDataBean.setStudentPlaced(rs.getInt(3));
+				yearBeanList.add(yearDataBean);
+			}
+			return yearBeanList;
+		} catch(SQLException e) {
+			logger.log(Level.WARNING, "Error retrieving previous year details from MySQL.");
+		} finally {
+			DBUtils.closeConnection(conn, pst, rs);
+		}
+		return yearBeanList;
+	}
 }

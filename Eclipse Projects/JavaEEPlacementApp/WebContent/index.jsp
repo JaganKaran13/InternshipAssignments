@@ -20,7 +20,7 @@
 		</div>
 		<div class="icon student-icon-section">
 			<h2>Student Portal</h2>
-			<a href="./pages/student.jsp">
+			<a href="./pages/student-portal.jsp">
 				<img class="student-icon" src="./images/student-icon.jpg" alt="">
 			</a>
 		</div>

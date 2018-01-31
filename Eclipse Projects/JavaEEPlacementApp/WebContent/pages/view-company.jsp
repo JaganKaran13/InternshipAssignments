@@ -19,9 +19,9 @@
 	<div class="navbar">
 		<a href="pages/admin.jsp">HOME</a> 
 		<a href="pages/insert-student.jsp">Insert Student</a>
-		<a href="pages/view-student.jsp">View Student</a>
+		<a href="ViewStudentsServlet">View Student</a>
 		<a href="pages/insert-company.jsp">Insert Company</a>
-		<a href="pages/view-company.jsp">View Company</a>
+		<a href="#">View Company</a>
 		<a href="index.jsp">Exit</a>
 	</div>
 	<table>
@@ -34,22 +34,14 @@
 			</tr>
 		</thead>
 		<tbody>
-	<%
-	ArrayList<CompanyDetails> companyArrayList = new ArrayList<CompanyDetails>();
-	AdminDAO adminDAO = new AdminDAOImpl();
-	CompanyDetails companyDetails;
-	companyArrayList = adminDAO.displayCompanyDetails();
-	for(int i = 0;i < companyArrayList.size(); i++) {
-	%>
+		<c:forEach items="${requestScope.companyArrayList}" var="companies" >
 			<tr>
-				<td><%=companyArrayList.get(i).getCompanyid() %></td>
-				<td><%=companyArrayList.get(i).getName() %></td>
-				<td><%=companyArrayList.get(i).getArrearCriteria() %></td>
-				<td><%=companyArrayList.get(i).getCgpaCriteria() %></td>
+				<td><c:out value="${companies.getCompanyid() }" /></td>
+				<td><c:out value="${companies.getName() }" /></td>
+				<td><c:out value="${companies.getArrearCriteria() }" /></td>
+				<td><c:out value="${companies.getCgpaCriteria() }" /></td>
 			</tr>
-	<%
-	}
-	%>
+		</c:forEach>
 		</tbody>
 	</table>
 </body>

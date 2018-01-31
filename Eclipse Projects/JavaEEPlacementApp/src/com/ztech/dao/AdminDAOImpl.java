@@ -16,7 +16,7 @@ import com.ztech.dbutils.DBUtils;
 
 public class AdminDAOImpl implements AdminDAO {
 
-	private static final Logger logger = Logger.getLogger(AdminDAOImpl.class.getName());
+	private final Logger logger = Logger.getLogger(AdminDAOImpl.class.getName());
 	private static Connection conn = null;
 	private static PreparedStatement pst = null;
 	private static ResultSet rs = null;
@@ -45,9 +45,11 @@ public class AdminDAOImpl implements AdminDAO {
 			java.sql.Timestamp timestamp = new java.sql.Timestamp(cal.getTimeInMillis());
 			pst.setTimestamp(9, timestamp);
 			pst.executeUpdate();
+			pst = (PreparedStatement) conn.prepareStatement(Constants.INSERT_STUDENT_DETAILS);
 			return true;
 		} catch (SQLException e) {
-			logger.severe("Problem inserting the values into the database");
+			logger.log(Level.WARNING, "Problem inserting the values into the database");
+			
 		} catch (ClassNotFoundException e) {
 			logger.warning("Class for MySQL driver not found.");
 		} finally {

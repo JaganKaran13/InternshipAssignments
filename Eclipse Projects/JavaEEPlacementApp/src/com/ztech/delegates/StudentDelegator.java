@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ztech.beans.CompanyDetails;
+import com.ztech.beans.FetchApplicationBean;
 import com.ztech.dao.*;
 
 public class StudentDelegator {
@@ -57,15 +57,11 @@ public class StudentDelegator {
 		return null;
 	}
 	
-	public ArrayList<CompanyDetails> getCompanyList() {
-		ArrayList<CompanyDetails> companyList = new ArrayList<CompanyDetails>();
-		AdminDAO adminDAO = new AdminDAOImpl();
-		try {
-			companyList = adminDAO.displayCompanyDetails();
-		} catch (SQLException e) {
-			logger.warning("Error retrieving the company details from the database");
-		}
-		return companyList;
+	public ArrayList<FetchApplicationBean> getApplicationStatus(HttpServletRequest request, HttpServletResponse response) {
+		othersDAO = new OthersDAOImpl();
+		int regno = Integer.parseInt(request.getParameter("regno"));
+		ArrayList<FetchApplicationBean> applicationStatusList = othersDAO.getApplicationStatus(regno);
+		return applicationStatusList;
 	}
 	
 }

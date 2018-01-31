@@ -15,7 +15,6 @@
 <link rel="stylesheet" href="css/company-portal.css">
 </head>
 <body>
-	<%@page import="com.ztech.delegates.*, com.ztech.beans.StudentDetails, java.util.*" %>
 	<fmt:bundle basename="com.ztech.bundles.config" >
 		<fmt:message key="COMPANY_HEADER" var="companyHeader" />
 		<fmt:message key="STUDENT_REGNO" var="studentRegno" />
@@ -52,25 +51,18 @@
 				<th>CGPA</th>
 				<th>Arrears</th>
 			</tr>
-			<%
-				CompanyDelegator companyDelegator = new CompanyDelegator();
-				String companyid = request.getAttribute("companyid");
-				ArrayList<StudentDetails> studentInterestedList = companyDelegator.getInterestedStudentsList(companyid);
-				for(int i = 0;i < studentInterestedList.size(); i++) {
-			%>
-			<tr>
-				<td>
-					<input type="checkbox" name="studentsPlaced" value="<%=studentInterestedList.get(i).getRegno() %>">
-				</td>
-				<td><%=studentInterestedList.get(i).getRegno() %></td>
-				<td><%=studentInterestedList.get(i).getName() %></td>
-				<td><%=studentInterestedList.get(i).getDeptName() %></td>
-				<td><%=studentInterestedList.get(i).getCgpa() %></td>
-				<td><%=studentInterestedList.get(i).getArrears() %></td>
-			</tr>
-			<%
-				}
-			%>
+			<c:forEach items="${requestScope.studentInterestedList }" var="interestedStudents">
+				<tr>
+					<td>
+						<input type="checkbox" name="studentsPlaced" value="<c:out value="${interestedStudents.getRegno() }" />">
+					</td>
+					<td><c:out value="${interestedStudents.getRegno() }" /></td>
+					<td><c:out value="${interestedStudents.getName() }" /></td>
+					<td><c:out value="${interestedStudents.getDeptName() }" /></td>
+					<td><c:out value="${interestedStudents.getCgpa() }" /></td>
+					<td><c:out value="${interestedStudents.getArrears() }" /></td>
+				</tr>
+			</c:forEach>
 		</table>
 		<p class="response-message">${requestScope.responseMessage}</p>
 		<input type="submit" value="Submit">

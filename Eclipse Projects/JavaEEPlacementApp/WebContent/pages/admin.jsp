@@ -19,14 +19,14 @@
 	</fmt:bundle>
 	<%
 		if(session == null) {
-			response.sendRedirect("${req}/pages/college-login.jsp");
+			response.sendRedirect("pages/college-login.jsp");
 		}
 	%>
 	<div class="navbar">
-		<a href="pages/insert-student.jsp">Insert Student</a> <a
-			href="pages/view-student.jsp">View Student</a> <a
-			href="pages/insert-company.jsp">Insert Company</a> <a
-			href="pages/view-company.jsp">View Company</a> 
+		<a href="pages/insert-student.jsp">Insert Student</a> 
+		<a href="ViewStudentsServlet">View Student</a> 
+		<a href="pages/insert-company.jsp">Insert Company</a> 
+		<a href="ViewCompanyServlet">View Company</a> 
 		<a href="LogOutServlet" name="logout">Log Out</a>
 	</div>
 	<h1>${helloAdmin}</h1>

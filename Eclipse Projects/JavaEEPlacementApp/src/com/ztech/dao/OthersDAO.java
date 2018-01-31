@@ -26,4 +26,8 @@ public interface OthersDAO {
 	public boolean insertStudentApplication(int regno, int companyid, String applyStatus) throws SQLException;
 	
 	public ArrayList<StudentDetails> getInterestedStudentsList(int companyid) throws SQLException;
+	
+	public ArrayList<FetchApplicationBean> getApplicationStatus(int regno);
+	
+	public ArrayList<YearDataBean> getByYearDetails();
 }

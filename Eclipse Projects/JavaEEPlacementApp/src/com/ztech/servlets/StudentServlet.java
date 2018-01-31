@@ -28,6 +28,8 @@ public class StudentServlet extends HttpServlet {
 		} else if(submitButton.equals("Decline")) {
 			request.setAttribute("responseMessage", studentDelegator.declineForCompany(request, response));
 		}
+		request.setAttribute("applicationStatusList", studentDelegator.getApplicationStatus(request, response));
+		request.setAttribute("regno", request.getParameter("regno"));
 		RequestDispatcher rd = request.getRequestDispatcher("./pages/student.jsp");
 		rd.forward(request, response);
 	}

@@ -4,6 +4,8 @@ body {
 }
 
 a {
+	margin: 15px;
+	padding: 5px;
 	color: white;
 	font-size: 20px;
 	text-decoration: none;
@@ -16,10 +18,9 @@ section a:hover {
 section {
 	text-align: center;
 	color: white;
-	background: url('../images/student-portal-background.jpg');
+	background: url('../images/student-portal-background.jpg') no-repeat center;
 	width: 80%;
-	height: 70vh;
-	left: 1vh;
+	height: 100vh;
 	margin: 2% auto;
 }
 

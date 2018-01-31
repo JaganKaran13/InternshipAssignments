@@ -19,10 +19,6 @@
 		import="java.util.ArrayList, com.ztech.beans.CompanyDetails, com.ztech.delegates.StudentDelegator"%>
 	<fmt:bundle basename="com.ztech.bundles.config" >
 		<fmt:message key="STUDENT_HEADER" var="studentHeader" />
-		<fmt:message key="COMPANY_NAME" var="companyName" />
-		<fmt:message key="REGNO" var="regno"/>
-		<fmt:message key="HOME_PAGE" var="homePage"/>
-		<fmt:message key="CHECK_ELIGIBILITY" var="checkEligibility"/>
 	</fmt:bundle>
 	<header class="header">
 		<div class="college-image-section"> 
@@ -42,35 +38,29 @@
 	</div>
 	<hr />
 	<section>
-	<form action="StudentServlet" method="POST">
-		<table>
-			<tr>
-				<td class="right-align"><label>${companyName} : </label></td>
-				<td><select name="companyid">
-						<%
-							StudentDelegator studentDelegator = new StudentDelegator();
-							ArrayList<CompanyDetails> companyArrayList = studentDelegator.getCompanyList();
-							for (int i = 0; i < companyArrayList.size(); i++) {
-						%>
-						<option value="<%=companyArrayList.get(i).getCompanyid()%>">
-							<%=companyArrayList.get(i).getName()%>
-						</option>
-						<%
-							}
-						%>
-				</select></td>
-			</tr>
-			<tr>
-				<td class="right-align"><label for="regno">${regno} : </label></td>
-				<td><input type="text" name="regno" id="regno"></td>
-			</tr>
-		</table>
-		<input type="submit" name="applicationSubmit" value="Apply">
-		<input type="submit" name="applicationSubmit" value="Decline">
-	</form>
+	<table>
+		<tr>
+			<th>Company</th>
+			<th>Apply Status</th>
+			<th></th>
+			<th></th>
+		</tr>
+		<c:forEach items="${requestScope.applicationStatusList}" var="applicationList">
+			<form action="StudentServlet" method="GET">
+				<input type="hidden" name="regno" value="${requestScope.regno }">
+				<input type="hidden" name="companyid" value="${applicationList.getCompanyid() }">
+				<tr>
+					<td><c:out value="${applicationList.getCompanyName()}" /></td>
+					<td><c:out value="${applicationList.getApplicationStatus()}" /></td>
+					<td><input type="submit" name="applicationSubmit" value="Apply"></td>
+					<td><input type="submit" name="applicationSubmit" value="Decline"></td>
+				</tr>
+			</form>
+		</c:forEach>
+	</table>
 	<br />
-	<a href="index.jsp">${homePage}</a>
 	<p class="responseMessage">${requestScope.responseMessage}</p>
+	<a href="pages/student-portal.jsp">Go Back</a>
 	</section>
 </body>
 </html>

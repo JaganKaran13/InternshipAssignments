@@ -13,12 +13,17 @@ import com.ztech.dao.AdminDAO;
 import com.ztech.dao.AdminDAOImpl;
 import com.ztech.dao.OthersDAO;
 import com.ztech.dao.OthersDAOImpl;
+import com.ztech.singleton.StudentsPlaced;
 
 public class CompanyDelegator {
 
 	private static Logger logger = Logger.getLogger(CompanyDelegator.class.getName());
+	private OthersDAO othersDAO;
+	private StudentsPlaced studentsPlaced = StudentsPlaced.getInstance();
 
-	public int validateCompanyLogin(String companyid, String password) {
+	public int validateCompanyLogin(HttpServletRequest request, HttpServletResponse response) {
+		String companyid = request.getParameter("companyid");
+		String password = request.getParameter("password");
 		AdminDAO adminDAO = new AdminDAOImpl();
 		try {
 			if (password.equals("")) {
@@ -38,7 +43,7 @@ public class CompanyDelegator {
 	}
 
 	public String getCompanyName(int companyid) {
-		OthersDAO othersDAO = new OthersDAOImpl();
+		othersDAO = new OthersDAOImpl();
 		String companyName = "";
 		try {
 			companyName = othersDAO.getCompanyName(companyid);
@@ -50,7 +55,7 @@ public class CompanyDelegator {
 
 	public ArrayList<StudentDetails> getInterestedStudentsList(String companyid) {
 		ArrayList<StudentDetails> studentInterestedList = new ArrayList<StudentDetails>();
-		OthersDAO othersDAO = new OthersDAOImpl();
+		othersDAO = new OthersDAOImpl();
 		try {
 			studentInterestedList = othersDAO.getInterestedStudentsList(Integer.parseInt(companyid));
 			return studentInterestedList;
@@ -59,17 +64,23 @@ public class CompanyDelegator {
 		}
 		return null;
 	}
-	
+
 	public String insertStudentsPlaced(HttpServletRequest request, HttpServletResponse response) {
 		int companyid = Integer.parseInt(request.getParameter("companyid"));
 		String[] studentsPlacedList = request.getParameterValues("studentsPlaced");
-		OthersDAO othersDAO = new OthersDAOImpl();
-		if(studentsPlacedList == null) {
+		othersDAO = new OthersDAOImpl();
+		if (studentsPlacedList == null) {
 			return "Select the students who got placed";
 		}
-		for(int i = 0; i < studentsPlacedList.length; i++) {
+		for (int i = 0; i < studentsPlacedList.length; i++) {
 			try {
-				othersDAO.enterStudentsPlaced(companyid, Integer.parseInt(studentsPlacedList[i]));
+				if (StudentsPlaced.isStudentPlaced(Integer.parseInt(studentsPlacedList[i]))) {
+					return "The student selected with register number " + studentsPlacedList[i] +
+							" is already placed";
+				} else {
+					studentsPlaced.insertStudentPlaced(Integer.parseInt(studentsPlacedList[i]));
+					othersDAO.enterStudentsPlaced(companyid, Integer.parseInt(studentsPlacedList[i]));
+				}
 			} catch (NumberFormatException e) {
 				logger.log(Level.WARNING, "The register number is not in numbers");
 			} catch (SQLException e) {
@@ -79,4 +90,7 @@ public class CompanyDelegator {
 		return "The students selected are placed in your company";
 	}
 
+	public String getCompanyId(HttpServletRequest request, HttpServletResponse response) {
+		return request.getParameter("companyid");
+	}
 }

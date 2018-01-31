@@ -31,9 +31,15 @@ public class Constants {
 	public static final String GET_COMPANY_NAME = "select name from company where companyid = ?";
 	public static final String INSERT_APPLY_STATUS = "insert into applystatus values(?,?,?)";
 	public static final String CHECK_APPLY_STATUS = "select * from applystatus where regno=? and companyid=?";
+	public static final String UPDATE_APPLY_STATUS = "update applystatus set interested=? where regno=? and companyid=?";
 	public static final String GET_INTERESTED_STUDENTS = "select student.regno, name, deptname, cgpa, "
 			+ "arrears from student, applystatus where placedstatus=? and applystatus.regno = student.regno and "
 			+ "applystatus.companyid=? and applystatus.interested=?";
 	public static final String GET_PLACED_IN_COMPANY_NAME = "select company.name from company, student, studentsplaced where studentsplaced.regno = ? " + 
 			"and studentsplaced.companysno = company.companyid and student.placedstatus=?";
+	public static final String FETCH_APPLICATIONS = "select company.name, interested from company, applystatus where applystatus.regno = ? and "
+			+ "applystatus.companyid = ? and applystatus.companyid = company.companyid";
+	public static final String GET_DETAILS_BY_YEAR = "select * from year_record";
+	public static final String GET_DETAILS_CURRENT_YEAR = "select * from year_record where year=?";
+	public static final String UPDATE_DETAILS_CURRENT_YEAR = "update year_record set student_placed=? where year=?";
 }

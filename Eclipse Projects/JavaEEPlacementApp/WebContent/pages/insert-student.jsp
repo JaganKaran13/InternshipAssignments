@@ -24,10 +24,10 @@
 	%>
 	<div class="navbar">
 		<a href="pages/admin.jsp">HOME</a>
-		<a href="pages/insert-student.jsp">Insert Student</a>
-		<a href="pages/view-student.jsp">View Student</a>
+		<a href="#">Insert Student</a>
+		<a href="ViewStudentsServlet">View Student</a>
 		<a href="pages/insert-company.jsp">Insert Company</a>
-		<a href="pages/view-company.jsp">View Company</a>
+		<a href="ViewCompanyServlet">View Company</a>
 		<a href="index.jsp">Exit</a>
 	</div>
 	<form action="InsertStudentServlet" method="POST">

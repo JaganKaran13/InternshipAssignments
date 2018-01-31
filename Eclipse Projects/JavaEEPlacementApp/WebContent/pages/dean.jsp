@@ -23,7 +23,6 @@
 		if (session == null) {
 			response.sendRedirect("pages/college-login.jsp");
 		}
-		OthersDAO othersDAO = new OthersDAOImpl();
 	%>
 	<fmt:bundle basename="com.ztech.bundles.config" >
 		<fmt:message key="DEANHEADER" var="deanHeader" />
@@ -49,8 +48,8 @@
 	</div>
 	<hr />
 	<section>
-	<h2>${studentsPlacedCount} : <%=othersDAO.noOfStudentsPlaced("")%></h2>
-	<h2>${placementPercentage} : <%=othersDAO.placementPercentage("")%>%</h2>
+	<h2>${studentsPlacedCount} : ${requestScope.studentsPlaced }</h2>
+	<h2>${placementPercentage} : ${requestScope.placementPercentage }%</h2>
 	<table>
 		<thead>
 			<tr>
@@ -61,73 +60,41 @@
 			</tr>
 		</thead>
 		<tbody>
-			<%
-				ArrayList<String> departmentList = othersDAO.getDepartmentList();
-				ArrayList<Integer> studentCountList = othersDAO.getTotalStudentsList();
-				DeanDelegator deanDelegator = new DeanDelegator();
-				ArrayList<Integer> studentsPlacedCountList = deanDelegator.getStudentsPlacedCountList(departmentList);
-				for (int i = 0; i < departmentList.size(); i++) {
-					String deptName = departmentList.get(i);
-					int totalStudentsPlaced = othersDAO.noOfStudentsPlaced(deptName);
-					int placementPercentage = othersDAO.placementPercentage(deptName);
-					int totalStudents = studentCountList.get(i);
-			%>
-			<tr>
-				<td><%=deptName%></td>
-				<td><%=totalStudents%></td>
-				<td><%=totalStudentsPlaced%></td>
-				<td><%=placementPercentage%></td>
-			</tr>
-			<%
-				}
-			%>
+			<c:forEach items="${requestScope.deanBeanList}" var="deanDisplayDetails">
+				<tr>
+					<td><c:out value="${deanDisplayDetails.getDeptName() }" /></td>
+					<td><c:out value="${deanDisplayDetails.getStudentCount() }" /></td>
+					<td><c:out value="${deanDisplayDetails.getStudentPlacedCount() }" /></td>
+					<td><c:out value="${deanDisplayDetails.getPlacedPercentage() }" /></td>
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 	<div class="chart-section">
 		<div id="placementChart"></div>
 	</div>
+	<div class="chart-section">
+		<div id="compare-chart"></div>
+	</div>
 	</section>
+	<script type="text/javascript" src="js/create-chart.js"></script>
 	<script>
+	<%
+		DeanDelegator deanDelegator = new DeanDelegator();
+		ArrayList<String> departmentList = deanDelegator.getDepartmentList();
+		ArrayList<Integer> studentsPlacedCountList = deanDelegator.getStudentsPlacedCountList(departmentList);
+		ArrayList<Integer> studentCountList = deanDelegator.getTotalStudentsList();
+		ArrayList<Integer> byYearStudentCountList = deanDelegator.getStudentCountByYear();
+		ArrayList<Integer> byYearStudentPlacedCountList = deanDelegator.getStudentPlacedCountByYear();
+	%>
 		var departmentData = [<%=deanDelegator.join(departmentList) %>];
 		var studentsPlacedCountData = [<%=deanDelegator.join(studentsPlacedCountList) %>];
 		var studentCountData = [<%=deanDelegator.join(studentCountList) %>];
-		var myChart = {
-			  "type": "bar",
-			  "title": {
-			    "text": "College Placement Statistics!!"
-			  },
-			  "plot": {
-			    "value-box": {
-			      "text": "%v"
-			    }
-			  },
-			  "legend": {
-				"align": "center",
-				"vertical-align": "bottom",
-			    "toggle-action": "remove",
-			    "draggable": true,
-			    "drag-handler": "icon"
-			  },
-			  "scale-x": {
-			    "values": departmentData
-			  },
-			  "series": [
-			    {
-			      "values": studentCountData,
-			      "text": "Total Students",
-			      "palette": 0
-			    },
-			    {
-			      "values": studentsPlacedCountData,
-			      "text": "Total Students Placed",
-			      "palette": 1
-			    }
-			  ]
-			};
-			zingchart.render({
-			  id: "placementChart",
-			  data: myChart
-			});
+		var callFunctionForStatistics = createChart("placementChart", departmentData, studentCountData, studentsPlacedCountData);
+		var yearData = [2016, 2017, 2018];
+		var studentCountByYearData = [<%=deanDelegator.join(byYearStudentCountList) %>];
+		var studentPlacedCountByYearData = [<%=deanDelegator.join(byYearStudentPlacedCountList) %>];
+		var callFunctionForComparison = createChart("compare-chart", yearData, studentCountByYearData, studentPlacedCountByYearData);
 	</script>
 </body>
 </html>

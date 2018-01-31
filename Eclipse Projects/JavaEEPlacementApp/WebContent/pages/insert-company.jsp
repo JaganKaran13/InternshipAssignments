@@ -24,10 +24,12 @@
 		<fmt:message key="INSERT_DETAILS_BUTTON" var="insertDetailsButton" />
 	</fmt:bundle>
 	<div class="navbar">
-		<a href="pages/admin.jsp">HOME</a> <a href="pages/insert-student.jsp">Insert
-			Student</a> <a href="pages/view-student.jsp">View Student</a> <a
-			href="pages/insert-company.jsp">Insert Company</a> <a
-			href="pages/view-company.jsp">View Company</a> <a href="index.jsp">Exit</a>
+		<a href="pages/admin.jsp">HOME</a> 
+		<a href="pages/insert-student.jsp">Insert Student</a> 
+		<a href="ViewStudentsServlet">View Student</a> 
+		<a href="#">Insert Company</a> 
+		<a href="ViewCompanyServlet">View Company</a>
+		<a href="index.jsp">Exit</a>
 	</div>
 	<form action="InsertCompanyServlet" method="POST">
 		<table>

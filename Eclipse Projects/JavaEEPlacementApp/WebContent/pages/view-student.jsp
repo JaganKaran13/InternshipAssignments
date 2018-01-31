@@ -16,19 +16,12 @@
 <link rel="stylesheet" href="css/view-student-input.css">
 </head>
 <body>
-<%@ page import="java.util.*, com.ztech.dao.*, com.ztech.beans.*, com.ztech.delegates.AdminDelegator" %>
-	<%
-		String orderBy = "regno";
-		if(request.getAttribute("orderBy") != null) {
-			orderBy = (String) request.getAttribute("orderBy");
-		}
-	%>
 	<div class="navbar">
 		<a href="pages/admin.jsp">Home</a>
 		<a href="pages/insert-student.jsp">Insert Student</a>
-		<a href="pages/view-student.jsp">View Student</a>
+		<a href="#">View Student</a>
 		<a href="pages/insert-company.jsp">Insert Company</a>
-		<a href="pages/view-company.jsp">View Company</a>
+		<a href="ViewCompanyServlet">View Company</a>
 		<a href="index.jsp">Exit</a>
 	</div>
 	<div class="form">
@@ -52,27 +45,19 @@
 				<th>Arrears</th>
 				<th>CGPA</th>
 				<th>Placed</th>
-				<th>Company</th>
 			</tr>
 		</thead>
 		<tbody>
-		<%
-			AdminDelegator adminDelegator = new AdminDelegator();
-			ArrayList<StudentDetails> studentArrayList = adminDelegator.displayStudentDetails(orderBy);
-			for(int i = 0;i < studentArrayList.size(); i++) {
-		%>
+		<c:forEach items="${requestScope.studentArrayList}" var="students">
 		<tr>
-			<td><%=studentArrayList.get(i).getRegno() %></td>
-			<td><%=studentArrayList.get(i).getName() %></td>
-			<td><%=studentArrayList.get(i).getDeptName() %></td>
-			<td><%=studentArrayList.get(i).getArrears() %></td>
-			<td><%=studentArrayList.get(i).getCgpa() %></td>
-			<td><%=studentArrayList.get(i).getPlacedStatus() %></td>
-			<td><%=adminDelegator.getPlacedInCompanyName(studentArrayList.get(i).getRegno()) %></td>
+			<td><c:out value="${students.getRegno()}" /></td>
+			<td><c:out value="${students.getName()}" /></td>
+			<td><c:out value="${students.getDeptName()}" /></td>
+			<td><c:out value="${students.getArrears()}" /></td>
+			<td><c:out value="${students.getCgpa()}" /></td>
+			<td><c:out value="${students.getPlacedStatus()}" /></td>
 		</tr>	
-		<%
-			}
-		%>
+		</c:forEach>
 		</tbody>
 	</table>
 </body>

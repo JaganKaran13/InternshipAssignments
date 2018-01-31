@@ -1,6 +1,7 @@
 package com.ztech.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.ztech.beans.DeanBean;
 import com.ztech.delegates.*;
 
 @WebServlet("/LoginValidator")
@@ -23,23 +25,27 @@ public class LoginValidator extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html");
-		String deptName = request.getParameter("deptname").toUpperCase();
-		String password = request.getParameter("password");
 		CollegeDelegator cd = new CollegeDelegator();
-		int choice = cd.validateCollegeLogin(deptName, password);
+		int choice = cd.validateCollegeLogin(request, response);
+		String deptName = request.getParameter("deptname").trim().toUpperCase();
 		HttpSession session = request.getSession();
 		RequestDispatcher rd;
+		HODDelegator hodDelegator = new HODDelegator();
 		switch (choice) {
 		case 1:
 			rd = request.getRequestDispatcher("./pages/admin.jsp");
 			rd.forward(request, response);
 			break;
 		case 2:
+			DeanDelegator deanDelegator = new DeanDelegator();
+			ArrayList<DeanBean> deanBeanList = deanDelegator.getDeanDisplayDetails();
+			request.setAttribute("deanBeanList", deanBeanList);
+			request.setAttribute("studentsPlaced", hodDelegator.noOfStudentsPlaced(""));
+			request.setAttribute("placementPercentage", hodDelegator.placementPercentage(""));
 			rd = request.getRequestDispatcher("./pages/dean.jsp");
 			rd.forward(request, response);
 			break;
 		case 3:
-			HODDelegator hodDelegator = new HODDelegator();
 			session.setAttribute("deptName", deptName);
 			request.setAttribute("studentsPlacedCount", hodDelegator.noOfStudentsPlaced(deptName));
 			request.setAttribute("placementPercentage", hodDelegator.placementPercentage(deptName));
