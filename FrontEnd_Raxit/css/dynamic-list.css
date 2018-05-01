@@ -22,6 +22,8 @@
     height: 25px;
     background: red;
     color: white;
+    cursor: pointer;
+    outline: none;
 }
 
 .listitem-uncheck-buttons {
@@ -37,7 +39,7 @@
 .listitem {
     display: flex;
     flex-direction: row;
-    width: 400px;
+    width: 350px;
     min-height: 100px;
     background: cyan;
     height: auto;
@@ -51,11 +53,12 @@
 
 #enterDataButton,
 #loadDataButton {
-    padding: 5px;
     font-size: 15px;
     background: #0047ff;
+    padding: 10px;
+    cursor: pointer;
     color: white;
-    border-radius: 15%;
+    border-radius: 12px;
     outline: none;
 }
 

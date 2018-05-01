@@ -1,13 +1,11 @@
-.formatting {
-    margin: 2px 3px 3px 3px;
+.container {
     border: 1px solid black;
     text-align: center;
     font-size: 25px;
     box-sizing: border-box;
 }
 
-.header,
-.footer {
+.header, .footer {
     width: 100%;
     height: 50px;
     background: lightblue;
@@ -21,23 +19,22 @@
 }
 
 .upper-section {
-    width: 29.4%;
+    width: 30%;
     height: 200px;
     background: orange;
 }
 
-.upper-section-2 {
+.upper-section-center {
     background: red;
 }
 
-.upper-section-3 {
+.upper-section-right {
     background: green;
 }
 
-.middle-section,
-.lower-section {
-    width: 89%;
-    height: 145px;
+.middle-section, .lower-section {
+    width: 90%;
+    height: 150px;
     background: blue;
 }
 
